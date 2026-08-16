@@ -72,11 +72,17 @@ A web app with three parts, each traceable straight back to Marcus:
    teacher speaks — and this is a direct accessibility win for a student who
    struggles with reading or with a cramped Chromebook keyboard. Both features
    hide themselves gracefully on browsers that don't support them.
-6. **Play-with-it widgets.** Some ideas only click when you touch them, so
-   key lessons come with a live manipulative: flip switches to build a number
-   in **binary**, drag a shift to run a **Caesar cipher**, or spin and measure
-   a **qubit** to feel superposition collapse. Show, don't tell.
-7. **Progress that just works.** No login, no account, no setup. Progress,
+6. **Play-with-it widgets + diagrams.** Some ideas only click when you touch
+   them, so key lessons come with a live manipulative: flip switches to build a
+   number in **binary**, drag a shift to run a **Caesar cipher**, or spin and
+   measure a **qubit**. Structural ideas get a hand-drawn **SVG diagram** (how
+   a website loads, packets, a neural network, a database table) — tiny, always
+   loading, theme-aware, no external images. Show, don't tell.
+7. **"Go further" — free courses per field.** A student with no teacher also
+   doesn't know *where* the good free material is. Every field links to
+   vetted, free resources (freeCodeCamp, CS50, Elements of AI, TryHackMe, IBM
+   Quantum, and more), flagging the ones that grant a **free certificate**.
+8. **Progress that just works.** No login, no account, no setup. Progress,
    chats, memory, and preferences are saved in the browser (`localStorage`),
    so it loads instantly on a locked-down school Chromebook with zero friction.
 
@@ -160,6 +166,8 @@ We're being honest here, because the rubric rewards it.
 | Teacher memory (name/interests + cross-field recall, injected into the prompt) | **Fully built.** |
 | Voice: teacher reads aloud (TTS) + speak-to-type (STT) via Web Speech API | **Fully built.** Uses the browser's own speech engine; hidden where unsupported. |
 | Interactive widgets: binary flipper, Caesar cipher, qubit | **Fully built.** Real, self-contained, no libraries. |
+| Hand-drawn SVG diagrams (website, packets, neural net, table) | **Fully built.** Inline SVG, theme-aware, no external images. |
+| "Go further" free-resource lists per field, with free-cert flags | **Fully built.** Curated real links; opens per current field. |
 | Progress tracking + "stuck" controls, saved locally | **Fully built.** |
 | Serverless proxy that keeps the API key private | **Fully built.** |
 | **Demo mode** (scripted replies when no key is set) | **Mocked on purpose** — a small scripted fallback so the public link is never blank. Clearly labelled "demo mode" in the UI. The real teacher is the live path. |

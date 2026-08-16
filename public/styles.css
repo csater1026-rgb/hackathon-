@@ -246,6 +246,47 @@ body {
 .modal-recall b { color: var(--ink-dim); font-weight: 600; }
 .modal-actions { display: flex; gap: 10px; margin-top: 18px; }
 
+/* ---------- Diagrams (illustrations) ---------- */
+.diagram-card {
+  border: 1px solid var(--line); background: var(--panel);
+  border-radius: 14px; padding: 16px 18px; margin-bottom: 6px;
+}
+.diagram-head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.diagram-title { font-weight: 700; font-size: 14px; }
+.diagram-card svg { width: 100%; height: auto; display: block; }
+.diagram-card .dg-box { fill: var(--panel-2); stroke: var(--line); }
+.diagram-card .dg-accent { fill: var(--accent); }
+.diagram-card .dg-good { fill: var(--good); }
+.diagram-card .dg-line { stroke: var(--ink-faint); fill: none; }
+.diagram-card .dg-line-accent { stroke: var(--accent); fill: none; }
+.diagram-card .dg-label { fill: var(--ink); font-size: 13px; font-weight: 600; font-family: inherit; }
+.diagram-card .dg-sub { fill: var(--ink-faint); font-size: 11px; font-family: inherit; }
+.diagram-card .dg-mono { fill: var(--ink-dim); font-size: 12px; font-family: ui-monospace, monospace; }
+.diagram-caption { color: var(--ink-dim); font-size: 12.5px; margin: 12px 0 0; }
+
+/* ---------- Go further button + resources ---------- */
+.further-btn {
+  margin-top: 14px; width: 100%; text-align: left; background: var(--panel-2);
+  border: 1px solid var(--line); color: var(--ink-dim); border-radius: 10px;
+  padding: 11px 12px; cursor: pointer; font-size: 13.5px; font-weight: 600; font-family: inherit;
+}
+.further-btn:hover { border-color: var(--accent); color: var(--ink); }
+.resource-list { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+.resource {
+  display: flex; align-items: center; gap: 12px; text-decoration: none;
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px 14px; color: var(--ink);
+}
+.resource:hover { border-color: var(--accent); }
+.resource .r-main { flex: 1; min-width: 0; }
+.resource .r-name { font-weight: 600; font-size: 14.5px; }
+.resource .r-note { font-size: 12.5px; color: var(--ink-faint); }
+.resource .r-cert {
+  flex: none; font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 99px;
+  background: rgba(87,204,153,.15); color: var(--good); border: 1px solid rgba(87,204,153,.3); white-space: nowrap;
+}
+.resource .r-arrow { flex: none; color: var(--ink-faint); font-size: 15px; }
+
 /* ---------- Interactive widgets (manipulatives) ---------- */
 .widget-card {
   border: 1px solid var(--accent); background: linear-gradient(180deg, #16233c, #131820);

@@ -17,6 +17,12 @@ const TRACKS = [
     title: "Programming",
     blurb: "Make a computer do what you say, one instruction at a time.",
     field: "programming and writing code",
+    resources: [
+      { name: "freeCodeCamp", url: "https://www.freecodecamp.org/learn", note: "Full free curriculum", cert: true },
+      { name: "Harvard CS50x", url: "https://cs50.harvard.edu/x/", note: "The famous intro to CS", cert: true },
+      { name: "The Odin Project", url: "https://www.theodinproject.com/", note: "Free full-stack path" },
+      { name: "Python for Everybody", url: "https://www.py4e.com/", note: "Free Python course", cert: true },
+    ],
     lessons: [
       {
         id: "prog-what-is-code",
@@ -74,6 +80,12 @@ const TRACKS = [
     title: "Cybersecurity",
     blurb: "How systems get broken into — and how they're defended.",
     field: "cybersecurity and how systems are attacked and defended",
+    resources: [
+      { name: "TryHackMe", url: "https://tryhackme.com/", note: "Hands-on hacking labs (free tier)" },
+      { name: "picoCTF", url: "https://picoctf.org/", note: "Beginner security puzzles" },
+      { name: "OverTheWire: Bandit", url: "https://overthewire.org/wargames/bandit/", note: "Learn by playing" },
+      { name: "Cisco: Intro to Cybersecurity", url: "https://www.netacad.com/courses/cybersecurity/introduction-cybersecurity", note: "Free course", cert: true },
+    ],
     lessons: [
       {
         id: "sec-what-is",
@@ -124,11 +136,18 @@ const TRACKS = [
     title: "Networking",
     blurb: "What actually happens when you open a website.",
     field: "computer networking and how the internet moves information",
+    resources: [
+      { name: "Professor Messer", url: "https://www.professormesser.com/", note: "Free Network+ video course" },
+      { name: "Cisco Networking Academy", url: "https://www.netacad.com/", note: "Free networking courses", cert: true },
+      { name: "Computer Networks (Kurose)", url: "https://gaia.cs.umass.edu/kurose_ross/interactive/", note: "Free interactive textbook" },
+      { name: "Khan Academy: The Internet", url: "https://www.khanacademy.org/computing/computers-and-internet", note: "Clear beginner videos" },
+    ],
     lessons: [
       {
         id: "net-what-happens",
         title: "What happens when you open a website",
         sub: "The whole journey",
+        diagram: "website",
         goal: "Trace, at a high level, the journey from typing a web address to seeing the page.",
         opener:
           "You type a website and it appears in under a second — but a LOT happens in that second, across the whole planet. Before I explain any of it: walk me through what YOU think happens between pressing Enter and the page showing up. Guesses are perfect. We'll fill in the real steps together.",
@@ -145,6 +164,7 @@ const TRACKS = [
         id: "net-packets",
         title: "Everything travels in packets",
         sub: "Packets",
+        diagram: "packets",
         goal: "Understand that data is split into small packets that travel separately and get reassembled.",
         opener:
           "A movie, a message, a photo — none of it crosses the internet in one piece. It's chopped into thousands of tiny chunks called packets. Why on earth would breaking data into pieces be BETTER than sending it whole? Think about a huge moving job with lots of small trucks vs one giant one. What advantages do the small trucks have?",
@@ -173,6 +193,12 @@ const TRACKS = [
     title: "How Computers Work",
     blurb: "Under the hood: from 1s and 0s to a running program.",
     field: "how computers work under the hood, from hardware to running code",
+    resources: [
+      { name: "Crash Course: Computer Science", url: "https://www.youtube.com/playlist?list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo", note: "Fantastic free video series" },
+      { name: "nand2tetris", url: "https://www.nand2tetris.org/", note: "Build a computer from scratch", cert: true },
+      { name: "Ben Eater", url: "https://eater.net/", note: "How hardware really works" },
+      { name: "Harvard CS50x", url: "https://cs50.harvard.edu/x/", note: "Great on low-level basics", cert: true },
+    ],
     lessons: [
       {
         id: "sys-binary",
@@ -223,6 +249,12 @@ const TRACKS = [
     title: "Databases & Data",
     blurb: "How apps remember everything — and answer questions fast.",
     field: "databases and how structured data is stored and queried",
+    resources: [
+      { name: "SQLBolt", url: "https://sqlbolt.com/", note: "Interactive SQL lessons" },
+      { name: "Khan Academy: SQL", url: "https://www.khanacademy.org/computing/computer-programming/sql", note: "Free intro with exercises" },
+      { name: "Mode SQL Tutorial", url: "https://mode.com/sql-tutorial/", note: "Beginner → advanced SQL" },
+      { name: "PostgreSQL Tutorial", url: "https://www.postgresqltutorial.com/", note: "A real database, free" },
+    ],
     lessons: [
       {
         id: "data-what-is",
@@ -236,6 +268,7 @@ const TRACKS = [
         id: "data-tables",
         title: "Tables, rows, and columns",
         sub: "Structure",
+        diagram: "table",
         goal: "Understand how data is structured into tables of rows (records) and columns (fields).",
         opener:
           "Most databases organize data like a spreadsheet: a table, with rows and columns. Say we're storing students. What columns (pieces of info) would each student need? And what would one single row represent? Sketch it out in words — you're doing real data design.",
@@ -272,6 +305,12 @@ const TRACKS = [
     title: "Artificial Intelligence",
     blurb: "How machines actually learn — and where they go wrong.",
     field: "artificial intelligence and machine learning, at a conceptual level",
+    resources: [
+      { name: "Elements of AI", url: "https://www.elementsofai.com/", note: "Famous free intro", cert: true },
+      { name: "Google ML Crash Course", url: "https://developers.google.com/machine-learning/crash-course", note: "Free, hands-on" },
+      { name: "Kaggle Learn", url: "https://www.kaggle.com/learn", note: "Short free courses", cert: true },
+      { name: "3Blue1Brown: Neural Nets", url: "https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi", note: "Beautiful visual explainer" },
+    ],
     lessons: [
       {
         id: "ai-what-is",
@@ -293,6 +332,7 @@ const TRACKS = [
         id: "ai-neural",
         title: "The idea of a neural network",
         sub: "Neurons & layers",
+        diagram: "neural",
         goal: "Get an intuition for a network as layers of simple units that vote and pass signals on.",
         opener:
           "A 'neural network' sounds intimidating, but picture a huge crowd guessing how many jellybeans are in a jar. Each person is bad alone, but if you combine everyone's guesses in a smart weighted way, the group gets scarily accurate. Why do you think a big group of simple guessers can beat one expert? Sit with that — it's the whole intuition.",
@@ -321,6 +361,12 @@ const TRACKS = [
     title: "Algorithms",
     blurb: "How to solve problems in clever, fast ways.",
     field: "algorithms and computational problem-solving",
+    resources: [
+      { name: "Khan Academy: Algorithms", url: "https://www.khanacademy.org/computing/computer-science/algorithms", note: "Free, with practice" },
+      { name: "VisuAlgo", url: "https://visualgo.net/", note: "See algorithms animate" },
+      { name: "MIT 6.006 (OCW)", url: "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/", note: "Free university lectures" },
+      { name: "LeetCode", url: "https://leetcode.com/", note: "Practice problems (free tier)" },
+    ],
     lessons: [
       {
         id: "algo-what-is",
@@ -370,6 +416,12 @@ const TRACKS = [
     title: "Game Dev & Graphics",
     blurb: "How computers draw moving worlds on a screen.",
     field: "game development and computer graphics",
+    resources: [
+      { name: "Harvard CS50 Games", url: "https://cs50.harvard.edu/games/", note: "Free game-dev course", cert: true },
+      { name: "Godot Engine", url: "https://docs.godotengine.org/en/stable/getting_started/introduction/", note: "Free engine + great docs" },
+      { name: "The Coding Train", url: "https://www.youtube.com/@TheCodingTrain", note: "Fun creative-coding videos" },
+      { name: "MDN Canvas Tutorial", url: "https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial", note: "Draw graphics in the browser" },
+    ],
     lessons: [
       {
         id: "game-loop",
@@ -419,6 +471,12 @@ const TRACKS = [
     title: "Quantum Computing",
     blurb: "Computing with the strange rules of the very small.",
     field: "quantum computing, at a beginner-friendly conceptual level",
+    resources: [
+      { name: "IBM Quantum Learning", url: "https://learning.quantum.ibm.com/", note: "Free courses + real quantum computers" },
+      { name: "Qiskit Textbook", url: "https://qiskit.org/learn/", note: "Free, hands-on with code" },
+      { name: "Quantum Country", url: "https://quantum.country/", note: "Beautiful memorable essays" },
+      { name: "Microsoft Quantum Katas", url: "https://quantum.microsoft.com/en-us/tools/quantum-katas", note: "Learn by solving" },
+    ],
     lessons: [
       {
         id: "q-why",
@@ -645,6 +703,7 @@ function renderChat() {
   }
   history.forEach((m) => addMessage(m.role, m.content));
   renderWidget(l);
+  renderDiagram(l);
 }
 
 // ---------------------------------------------------------------------------
@@ -735,7 +794,7 @@ function markDoneAndAdvance() {
   if (next) {
     addMessage("assistant", `Nice work — that's "${l.title}" done. ✓ Whenever you're ready, click "${next.title}" on the left and we'll keep going.`);
   } else {
-    addMessage("assistant", `That's the whole ${track.title} track finished — every lesson done. ✓ You just taught yourself a field of computer science with no teacher in your school. That's the entire point. Pick another field at the top left and keep going. 🎉`);
+    addMessage("assistant", `That's the whole ${track.title} track finished — every lesson done. ✓ You just taught yourself a field of computer science with no teacher in your school. That's the entire point. Want to go deeper? Hit "📚 Go further" on the left for free courses (some with real certificates). Or pick a new field up top. 🎉`);
   }
 }
 
@@ -843,6 +902,40 @@ $("#notes-forget").addEventListener("click", () => {
 });
 
 // ---------------------------------------------------------------------------
+// Go further — free, reputable resources for the current field, so a student
+// with no teacher also knows WHERE to keep learning (and earn free certs).
+// ---------------------------------------------------------------------------
+const furtherModal = $("#further-modal");
+function openFurther(open) {
+  if (open) {
+    const t = currentTrack();
+    $("#further-heading").textContent = `📚 Keep learning: ${t.title}`;
+    $("#further-sub").textContent = "Free places to go deeper — a 🎓 means you can earn a real certificate for free.";
+    const list = $("#resource-list");
+    list.innerHTML = "";
+    (t.resources || []).forEach((r) => {
+      const a = document.createElement("a");
+      a.className = "resource";
+      a.href = r.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.innerHTML = `
+        <span class="r-main">
+          <span class="r-name">${r.name}</span>
+          <span class="r-note">${r.note}</span>
+        </span>
+        ${r.cert ? `<span class="r-cert">🎓 free cert</span>` : ""}
+        <span class="r-arrow" aria-hidden="true">↗</span>`;
+      list.appendChild(a);
+    });
+  }
+  furtherModal.hidden = !open;
+}
+$("#further-btn").addEventListener("click", () => openFurther(true));
+$("#further-close").addEventListener("click", () => openFurther(false));
+furtherModal.addEventListener("click", (e) => { if (e.target === furtherModal) openFurther(false); });
+
+// ---------------------------------------------------------------------------
 // Interactive widgets (manipulatives) — some ideas you have to PLAY with to
 // get. When a lesson has a widget, it appears at the top of the chat.
 // ---------------------------------------------------------------------------
@@ -859,6 +952,108 @@ function renderWidget(lesson) {
   WIDGET_BUILDERS[lesson.widget](body);
   messagesEl.insertBefore(card, messagesEl.firstChild);
 }
+
+// ---------------------------------------------------------------------------
+// Diagrams — hand-drawn inline SVG illustrations for structural ideas that a
+// picture explains better than words. Tiny, always load (no external images),
+// and theme-aware via CSS variables. Companions to the Socratic chat, not
+// spoilers: they show the shape of an idea while the teacher still probes it.
+// ---------------------------------------------------------------------------
+function renderDiagram(lesson) {
+  if (!lesson.diagram) return;
+  const d = DIAGRAMS[lesson.diagram];
+  if (!d) return;
+  const card = document.createElement("div");
+  card.className = "diagram-card";
+  card.innerHTML = `
+    <div class="diagram-head"><span class="widget-spark">🖼️</span><span class="diagram-title">${d.title}</span></div>
+    ${d.svg}
+    <p class="diagram-caption">${d.caption}</p>`;
+  messagesEl.insertBefore(card, messagesEl.firstChild);
+}
+
+const DIAGRAMS = {
+  website: {
+    title: "How a website reaches you",
+    caption: "You ask for a name, it gets turned into an address, the server sends the page back — split into packets that reassemble on your screen.",
+    svg: `<svg viewBox="0 0 620 150" role="img" aria-label="A browser asks DNS for an address, then requests a page from a server, which replies.">
+      <rect class="dg-box" x="8" y="45" width="120" height="60" rx="10"/>
+      <text class="dg-label" x="68" y="72" text-anchor="middle">You 💻</text>
+      <text class="dg-sub" x="68" y="90" text-anchor="middle">type a web name</text>
+      <rect class="dg-box" x="250" y="8" width="120" height="50" rx="10"/>
+      <text class="dg-label" x="310" y="30" text-anchor="middle">DNS 📖</text>
+      <text class="dg-sub" x="310" y="46" text-anchor="middle">name → address</text>
+      <rect class="dg-box" x="492" y="45" width="120" height="60" rx="10"/>
+      <text class="dg-label" x="552" y="72" text-anchor="middle">Server 🗄️</text>
+      <text class="dg-sub" x="552" y="90" text-anchor="middle">has the page</text>
+      <path class="dg-line-accent" stroke-width="2" d="M128 60 Q190 30 250 33" marker-end="url(#ar)"/>
+      <path class="dg-line-accent" stroke-width="2" d="M370 40 Q430 60 492 68" marker-end="url(#ar)"/>
+      <path class="dg-line" stroke-width="2" stroke-dasharray="5 4" d="M492 90 Q310 140 128 92" marker-end="url(#ar2)"/>
+      <text class="dg-mono" x="310" y="132" text-anchor="middle">the page comes back in packets</text>
+      <defs>
+        <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" class="dg-line-accent" stroke-width="1.5"/></marker>
+        <marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" class="dg-line" stroke-width="1.5"/></marker>
+      </defs>
+    </svg>`,
+  },
+  packets: {
+    title: "One message → many packets → back together",
+    caption: "Big data is chopped into small numbered packets. They travel separately (maybe by different routes) and are reassembled in order at the other end.",
+    svg: `<svg viewBox="0 0 620 130" role="img" aria-label="A message splits into four numbered packets that travel and reassemble.">
+      <rect class="dg-box" x="8" y="45" width="90" height="40" rx="8"/>
+      <text class="dg-label" x="53" y="70" text-anchor="middle">message</text>
+      <g>
+        <rect class="dg-accent" x="200" y="18" width="34" height="26" rx="5"/><text class="dg-mono" x="217" y="36" text-anchor="middle" style="fill:#0b1220">1</text>
+        <rect class="dg-accent" x="250" y="52" width="34" height="26" rx="5"/><text class="dg-mono" x="267" y="70" text-anchor="middle" style="fill:#0b1220">2</text>
+        <rect class="dg-accent" x="200" y="86" width="34" height="26" rx="5"/><text class="dg-mono" x="217" y="104" text-anchor="middle" style="fill:#0b1220">3</text>
+        <rect class="dg-accent" x="300" y="30" width="34" height="26" rx="5"/><text class="dg-mono" x="317" y="48" text-anchor="middle" style="fill:#0b1220">4</text>
+      </g>
+      <rect class="dg-box" x="470" y="30" width="34" height="26" rx="5"/><text class="dg-mono" x="487" y="48" text-anchor="middle">1</text>
+      <rect class="dg-box" x="470" y="60" width="34" height="26" rx="5"/><text class="dg-mono" x="487" y="78" text-anchor="middle">2</text>
+      <rect class="dg-box" x="510" y="30" width="34" height="26" rx="5"/><text class="dg-mono" x="527" y="48" text-anchor="middle">3</text>
+      <rect class="dg-box" x="510" y="60" width="34" height="26" rx="5"/><text class="dg-mono" x="527" y="78" text-anchor="middle">4</text>
+      <text class="dg-sub" x="507" y="104" text-anchor="middle">reassembled</text>
+      <path class="dg-line" stroke-width="2" stroke-dasharray="4 4" d="M98 65 L196 65" marker-end="url(#pa)"/>
+      <path class="dg-line" stroke-width="2" stroke-dasharray="4 4" d="M338 65 L466 60" marker-end="url(#pa)"/>
+      <defs><marker id="pa" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" class="dg-line" stroke-width="1.5"/></marker></defs>
+    </svg>`,
+  },
+  neural: {
+    title: "A neural network: layers of simple units",
+    caption: "Signals enter on the left, pass through layers of little units that each weigh what they receive, and combine into an answer on the right. No single unit is smart — the network is.",
+    svg: `<svg viewBox="0 0 620 180" role="img" aria-label="Three layers of nodes connected left to right: inputs, a hidden layer, and an output.">
+      <g class="dg-line" stroke-width="1">
+        <path d="M110 40 L300 30"/><path d="M110 40 L300 90"/><path d="M110 40 L300 150"/>
+        <path d="M110 90 L300 30"/><path d="M110 90 L300 90"/><path d="M110 90 L300 150"/>
+        <path d="M110 140 L300 30"/><path d="M110 140 L300 90"/><path d="M110 140 L300 150"/>
+        <path d="M300 30 L510 90"/><path d="M300 90 L510 90"/><path d="M300 150 L510 90"/>
+      </g>
+      <g><circle class="dg-box" cx="110" cy="40" r="16"/><circle class="dg-box" cx="110" cy="90" r="16"/><circle class="dg-box" cx="110" cy="140" r="16"/></g>
+      <g><circle class="dg-accent" cx="300" cy="30" r="16"/><circle class="dg-accent" cx="300" cy="90" r="16"/><circle class="dg-accent" cx="300" cy="150" r="16"/></g>
+      <circle class="dg-good" cx="510" cy="90" r="18"/>
+      <text class="dg-sub" x="110" y="172" text-anchor="middle">inputs</text>
+      <text class="dg-sub" x="300" y="172" text-anchor="middle">hidden layer</text>
+      <text class="dg-sub" x="510" y="172" text-anchor="middle">answer</text>
+    </svg>`,
+  },
+  table: {
+    title: "A database table",
+    caption: "Columns are the kinds of info you store; each row is one record. Simple — but this shape is what lets a database answer questions fast.",
+    svg: `<svg viewBox="0 0 620 170" role="img" aria-label="A table with a header row of columns and three data rows.">
+      <rect class="dg-accent" x="60" y="20" width="500" height="30"/>
+      <text class="dg-label" x="120" y="40" text-anchor="middle" style="fill:#0b1220">name</text>
+      <text class="dg-label" x="260" y="40" text-anchor="middle" style="fill:#0b1220">grade</text>
+      <text class="dg-label" x="420" y="40" text-anchor="middle" style="fill:#0b1220">favorite subject</text>
+      <g class="dg-mono">
+        <rect class="dg-box" x="60" y="50" width="500" height="30"/><text x="120" y="70" text-anchor="middle">Marcus</text><text x="260" y="70" text-anchor="middle">10</text><text x="420" y="70" text-anchor="middle">CS</text>
+        <rect class="dg-box" x="60" y="80" width="500" height="30"/><text x="120" y="100" text-anchor="middle">Aisha</text><text x="260" y="100" text-anchor="middle">11</text><text x="420" y="100" text-anchor="middle">Physics</text>
+        <rect class="dg-box" x="60" y="110" width="500" height="30"/><text x="120" y="130" text-anchor="middle">Leo</text><text x="260" y="130" text-anchor="middle">9</text><text x="420" y="130" text-anchor="middle">Art</text>
+      </g>
+      <text class="dg-sub" x="310" y="12" text-anchor="middle">columns  →  the kinds of info</text>
+      <text class="dg-sub" x="30" y="98" text-anchor="middle" transform="rotate(-90 30 98)">one row = one record</text>
+    </svg>`,
+  },
+};
 
 const WIDGET_META = {
   binary: { title: "Try it: build a number from 1s and 0s", hint: "Flip the switches on. Each switch is worth double the one to its right. Can you make the number 5? How about 42?" },

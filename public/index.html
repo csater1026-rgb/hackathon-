@@ -41,6 +41,8 @@
         <div class="progress-fill" id="progress-fill"></div>
       </div>
     </div>
+
+    <button class="further-btn" id="further-btn">📚 Go further — free courses</button>
   </aside>
 
   <!-- Main: the teacher -->
@@ -124,6 +126,19 @@ print("hello, world")
         <button class="lab-run" id="notes-save">Save</button>
         <button class="lab-ghost" id="notes-forget">Forget everything</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Go further: free, reputable resources to keep learning each field.
+       A kid with no teacher also doesn't know WHERE the good free stuff is. -->
+  <div class="modal-overlay" id="further-modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="further-heading">
+      <div class="modal-head">
+        <h2 id="further-heading">📚 Go further</h2>
+        <button class="lab-close" id="further-close" aria-label="Close">✕</button>
+      </div>
+      <p class="modal-sub" id="further-sub">Free places to keep learning — many give you a real certificate.</p>
+      <div class="resource-list" id="resource-list"></div>
     </div>
   </div>
 
