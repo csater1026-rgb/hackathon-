@@ -52,6 +52,8 @@
         <p id="lesson-goal" class="lesson-goal"></p>
       </div>
       <div class="header-right">
+        <button class="lab-toggle" id="voice-toggle" aria-pressed="false" title="Have your teacher read replies aloud" hidden>🔊 Read aloud</button>
+        <button class="lab-toggle" id="notes-toggle" title="What your teacher remembers about you">🧠 Teacher's notes</button>
         <button class="lab-toggle" id="lab-toggle" aria-expanded="false" aria-controls="code-lab">⌨ Code Lab</button>
         <span class="mode-pill" id="mode-pill" title="Whether a live AI model is connected">checking…</span>
       </div>
@@ -98,10 +100,32 @@ print("hello, world")
 
     <form class="composer" id="composer">
       <label class="sr-only" for="chat-input">Message your teacher</label>
+      <button type="button" class="mic-btn" id="mic-btn" aria-label="Speak to your teacher instead of typing" title="Speak instead of typing" hidden>🎤</button>
       <textarea id="chat-input" rows="1" placeholder="Ask your teacher anything… (no such thing as a dumb question)"></textarea>
       <button type="submit" id="send-btn" aria-label="Send">Send</button>
     </form>
   </main>
+
+  <!-- Teacher's notes: a memory that makes lessons personal and carries
+       across every field, so the teacher knows YOU, not just the topic. -->
+  <div class="modal-overlay" id="notes-modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="notes-heading">
+      <div class="modal-head">
+        <h2 id="notes-heading">🧠 What your teacher remembers</h2>
+        <button class="lab-close" id="notes-close" aria-label="Close">✕</button>
+      </div>
+      <p class="modal-sub">A good teacher knows you. Tell yours a little, and it'll weave your world into the lessons and remember you across every field.</p>
+      <label class="modal-label" for="notes-name">What should your teacher call you?</label>
+      <input class="modal-input" id="notes-name" type="text" placeholder="e.g. Marcus" maxlength="40" />
+      <label class="modal-label" for="notes-about">Anything about you (hobbies, interests, what you find hard)</label>
+      <textarea class="modal-textarea" id="notes-about" rows="3" placeholder="e.g. I love basketball and drawing. Math words confuse me. I want to make games one day." maxlength="400"></textarea>
+      <div class="modal-recall" id="notes-recall"></div>
+      <div class="modal-actions">
+        <button class="lab-run" id="notes-save">Save</button>
+        <button class="lab-ghost" id="notes-forget">Forget everything</button>
+      </div>
+    </div>
+  </div>
 
   <script src="./app.js"></script>
 </body>

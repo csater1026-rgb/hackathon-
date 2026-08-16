@@ -95,6 +95,8 @@ export default async function handler(req, res) {
   }
   const messages = Array.isArray(body?.messages) ? body.messages : [];
   const lessonContext = typeof body?.lessonContext === "string" ? body.lessonContext : "";
+  const profile = body?.profile && typeof body.profile === "object" ? body.profile : {};
+  const recall = typeof body?.recall === "string" ? body.recall : "";
 
   const apiKey = process.env.AI_API_KEY;
 
@@ -110,9 +112,18 @@ export default async function handler(req, res) {
   const baseUrl = process.env.AI_BASE_URL || DEFAULT_BASE_URL;
   const model = process.env.AI_MODEL || DEFAULT_MODEL;
 
-  const system = lessonContext
-    ? `${TEACHER_SYSTEM_PROMPT}\n\nThe student is currently on this lesson:\n${lessonContext}\nKeep them moving forward on it.`
-    : TEACHER_SYSTEM_PROMPT;
+  let system = TEACHER_SYSTEM_PROMPT;
+  if (lessonContext) {
+    system += `\n\nThe student is currently on this lesson:\n${lessonContext}\nKeep them moving forward on it.`;
+  }
+  // Memory: what the teacher knows about this specific student.
+  const memoryBits = [];
+  if (profile.name) memoryBits.push(`Their name is ${profile.name} — use it naturally.`);
+  if (profile.about) memoryBits.push(`About them: ${profile.about}. Weave their real interests and struggles into your examples and analogies.`);
+  if (recall) memoryBits.push(`They have already learned these lessons with you: ${recall}. When it helps, connect the new idea back to something they already understand.`);
+  if (memoryBits.length) {
+    system += `\n\nWhat you remember about this student (you are their ongoing teacher, not a stranger):\n- ${memoryBits.join("\n- ")}`;
+  }
 
   try {
     const upstream = await fetch(`${baseUrl}/chat/completions`, {

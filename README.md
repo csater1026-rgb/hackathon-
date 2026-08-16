@@ -60,9 +60,25 @@ A web app with three parts, each traceable straight back to Marcus:
    the real output or error, with nothing to install. When he's stuck, one
    button sends his exact code *and* its error to the teacher, turning every
    bug into a lesson instead of a dead end.
-4. **Progress that just works.** No login, no account, no setup. Progress and
-   chats are saved in the browser (`localStorage`), so it loads instantly on a
-   locked-down school Chromebook and works with zero friction.
+4. **The teacher remembers you.** A real teacher knows *you*, not just the
+   subject. In "Teacher's notes" the student tells it their name and interests
+   once; from then on it weaves their world into examples and — because it also
+   remembers which lessons they've finished across every field — connects new
+   ideas back to what they already learned ("remember hashing? entanglement is
+   that same kind of surprise"). It's a relationship, not a stateless bot.
+5. **You can talk to it, and it talks back.** Voice is built in (the browser's
+   Web Speech API — no server, no cost): the teacher reads its replies aloud,
+   and the student can answer out loud with the mic instead of typing. A real
+   teacher speaks — and this is a direct accessibility win for a student who
+   struggles with reading or with a cramped Chromebook keyboard. Both features
+   hide themselves gracefully on browsers that don't support them.
+6. **Play-with-it widgets.** Some ideas only click when you touch them, so
+   key lessons come with a live manipulative: flip switches to build a number
+   in **binary**, drag a shift to run a **Caesar cipher**, or spin and measure
+   a **qubit** to feel superposition collapse. Show, don't tell.
+7. **Progress that just works.** No login, no account, no setup. Progress,
+   chats, memory, and preferences are saved in the browser (`localStorage`),
+   so it loads instantly on a locked-down school Chromebook with zero friction.
 
 The **"Feeling stuck?"** buttons are the heart of it: *Give me a nudge* /
 *I'm really stuck* / *I think I've got it*. That's a student steering how much
@@ -79,6 +95,29 @@ link is never blank). With an API key connected, the full AI teacher is live —
 see below.
 
 ---
+
+## Why it all fits together
+
+One thesis holds every feature: **access to answers is not access to a
+teacher, and a kid with no CS teacher needs the teacher.** Each piece is that
+thesis expressed once more, so nothing is decoration:
+
+- **Socratic refusal to just answer** → a teacher makes you think; a search box
+  doesn't.
+- **Nine fields, including the niche ones** → a teacher shows you the whole
+  landscape, especially the rooms (security, networking, quantum) you didn't
+  know existed and can't find a door into alone.
+- **Memory** → a teacher knows *you*, and ties new ideas to what you already
+  learned.
+- **Voice** → a teacher *talks with you* — and it's the accessibility bridge
+  for a student who can't easily read or type.
+- **Code Lab + widgets** → a teacher lets you *do it*, not just hear about it,
+  even on a Chromebook that can't install anything.
+- **No login, local progress, runs on a weak device** → the teacher meets the
+  student where they actually are.
+
+Everything traces back to one person — a curious student with no teacher and
+no one to ask — which is exactly what the highest band of the rubric asks for.
 
 ## Stack
 
@@ -118,6 +157,9 @@ We're being honest here, because the rubric rewards it.
 | Nine CS field tracks (46 lessons), field picker, lesson goals, per-lesson chat + progress | **Fully built.** |
 | Code Lab — real in-browser Python (Pyodide/WASM), run + read errors | **Fully built.** Runs actual CPython in the browser; needs the CDN to load on first run. |
 | "Ask teacher about this" — sends real code + real output into the chat | **Fully built.** |
+| Teacher memory (name/interests + cross-field recall, injected into the prompt) | **Fully built.** |
+| Voice: teacher reads aloud (TTS) + speak-to-type (STT) via Web Speech API | **Fully built.** Uses the browser's own speech engine; hidden where unsupported. |
+| Interactive widgets: binary flipper, Caesar cipher, qubit | **Fully built.** Real, self-contained, no libraries. |
 | Progress tracking + "stuck" controls, saved locally | **Fully built.** |
 | Serverless proxy that keeps the API key private | **Fully built.** |
 | **Demo mode** (scripted replies when no key is set) | **Mocked on purpose** — a small scripted fallback so the public link is never blank. Clearly labelled "demo mode" in the UI. The real teacher is the live path. |

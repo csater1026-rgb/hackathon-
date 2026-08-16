@@ -111,6 +111,7 @@ const TRACKS = [
         id: "sec-encryption",
         title: "Scrambling secrets",
         sub: "Encryption & keys",
+        widget: "caesar",
         goal: "Understand encryption via a Caesar cipher — and the idea of a 'key' that locks and unlocks a message.",
         opener:
           "The oldest trick in cryptography is over 2000 years old and you can do it in your head. Take the word `HELLO` and shift every letter forward by 3 in the alphabet. What do you get? Work it out by hand first — then we'll teach the computer to do it (and to undo it).",
@@ -177,6 +178,7 @@ const TRACKS = [
         id: "sys-binary",
         title: "Everything is 1s and 0s",
         sub: "Binary",
+        widget: "binary",
         goal: "Understand why computers use binary, and how numbers can be built from just on/off.",
         opener:
           "A computer, deep down, only knows two things: on and off, 1 and 0. That's it. Yet it can show video and run games. Here's the puzzle to chew on first: if you could only use switches that are ON or OFF, how would you represent the number 5? You have as many switches as you want. Have a go — there's a neat pattern waiting.",
@@ -430,6 +432,7 @@ const TRACKS = [
         id: "q-qubit",
         title: "Bits that are both at once",
         sub: "Superposition",
+        widget: "qubit",
         goal: "Get an intuition for a qubit being a blend of 0 and 1 until measured.",
         opener:
           "A normal bit is either 0 or 1. A quantum bit — a qubit — can be a blend of both at the same time, until you look at it. Picture a coin spinning in the air: while it spins, is it heads or tails? What would you even call that in-between state? Sit with the spinning coin — that's the closest everyday thing to superposition.",
@@ -476,6 +479,7 @@ function defaultState() {
     currentId: TRACKS[0].lessons[0].id,
     done: {},
     chats: {},
+    profile: { name: "", about: "" },
   };
 }
 function loadState() {
@@ -492,6 +496,7 @@ function loadState() {
       }
       s.done = s.done || {};
       s.chats = s.chats || {};
+      s.profile = s.profile || { name: "", about: "" };
       return s;
     }
   } catch (_) {}
@@ -513,6 +518,15 @@ function currentLesson() {
 function chatFor(id) {
   if (!state.chats[id]) state.chats[id] = [];
   return state.chats[id];
+}
+
+// A short summary of what the student has already learned with this teacher,
+// so it can genuinely refer back ("remember hashing? entanglement is similar").
+function buildRecall() {
+  const doneLessons = ALL_LESSONS.filter((l) => state.done[l.id]);
+  if (doneLessons.length === 0) return "";
+  const titles = doneLessons.slice(-10).map((l) => l.title);
+  return titles.join("; ");
 }
 
 // ---------------------------------------------------------------------------
@@ -630,6 +644,7 @@ function renderChat() {
     saveState();
   }
   history.forEach((m) => addMessage(m.role, m.content));
+  renderWidget(l);
 }
 
 // ---------------------------------------------------------------------------
@@ -681,6 +696,8 @@ async function send(text) {
       body: JSON.stringify({
         messages: history.slice(-12), // keep context small & fast
         lessonContext: `Field: ${t.title} — ${t.field}. Lesson: ${l.title}. Goal: ${l.goal}`,
+        profile: state.profile,
+        recall: buildRecall(),
       }),
     });
     const data = await res.json();
@@ -688,6 +705,7 @@ async function send(text) {
     typing.remove();
     history.push({ role: "assistant", content: reply });
     addMessage("assistant", reply);
+    speak(reply);
     saveState();
     setMode(data.mode);
   } catch (err) {
@@ -784,6 +802,227 @@ $("#reset-btn").addEventListener("click", () => {
     renderChat();
   }
 });
+
+// ---------------------------------------------------------------------------
+// Teacher's notes — a memory that makes the teacher know YOU, across fields.
+// ---------------------------------------------------------------------------
+const notesModal = $("#notes-modal");
+const notesName = $("#notes-name");
+const notesAbout = $("#notes-about");
+const notesRecall = $("#notes-recall");
+
+function openNotes(open) {
+  if (open) {
+    notesName.value = state.profile.name || "";
+    notesAbout.value = state.profile.about || "";
+    const doneCount = ALL_LESSONS.filter((l) => state.done[l.id]).length;
+    const fieldsTouched = TRACKS.filter((t) => t.lessons.some((l) => state.done[l.id])).length;
+    notesRecall.innerHTML = doneCount
+      ? `<b>Your teacher also remembers your learning:</b> ${doneCount} lesson${doneCount > 1 ? "s" : ""} finished across ${fieldsTouched} field${fieldsTouched > 1 ? "s" : ""}. It'll connect new ideas back to these.`
+      : `<b>Your teacher will also remember your progress</b> as you finish lessons, and connect new ideas back to them.`;
+  }
+  notesModal.hidden = !open;
+  if (open) notesName.focus();
+}
+$("#notes-toggle").addEventListener("click", () => openNotes(true));
+$("#notes-close").addEventListener("click", () => openNotes(false));
+notesModal.addEventListener("click", (e) => { if (e.target === notesModal) openNotes(false); });
+$("#notes-save").addEventListener("click", () => {
+  state.profile = { name: notesName.value.trim(), about: notesAbout.value.trim() };
+  saveState();
+  openNotes(false);
+  if (state.profile.name) {
+    addMessage("assistant", `Got it — I'll remember that, ${state.profile.name}. 🧠`);
+  }
+});
+$("#notes-forget").addEventListener("click", () => {
+  state.profile = { name: "", about: "" };
+  saveState();
+  notesName.value = "";
+  notesAbout.value = "";
+});
+
+// ---------------------------------------------------------------------------
+// Interactive widgets (manipulatives) — some ideas you have to PLAY with to
+// get. When a lesson has a widget, it appears at the top of the chat.
+// ---------------------------------------------------------------------------
+function renderWidget(lesson) {
+  if (!lesson.widget) return;
+  const card = document.createElement("div");
+  card.className = "widget-card";
+  const meta = WIDGET_META[lesson.widget];
+  card.innerHTML = `
+    <div class="widget-head"><span class="widget-spark">✨</span><span class="widget-title">${meta.title}</span></div>
+    <p class="widget-hint">${meta.hint}</p>
+    <div class="widget-body"></div>`;
+  const body = card.querySelector(".widget-body");
+  WIDGET_BUILDERS[lesson.widget](body);
+  messagesEl.insertBefore(card, messagesEl.firstChild);
+}
+
+const WIDGET_META = {
+  binary: { title: "Try it: build a number from 1s and 0s", hint: "Flip the switches on. Each switch is worth double the one to its right. Can you make the number 5? How about 42?" },
+  caesar: { title: "Try it: a Caesar cipher", hint: "Type a message and drag the shift. Every letter slides that many steps through the alphabet. The shift is your secret 'key' — the same number unscrambles it." },
+  qubit: { title: "Try it: a qubit", hint: "Spin it to put it in 'superposition' — both 0 and 1 at once. Then measure it: it randomly collapses to just one. Measure a bunch and watch the pattern." },
+};
+
+const WIDGET_BUILDERS = {
+  binary(el) {
+    const places = [128, 64, 32, 16, 8, 4, 2, 1];
+    const bits = places.map(() => 0);
+    el.innerHTML = `<div class="bits"></div>
+      <div class="widget-readout">In binary: <span class="bin">00000000</span> &nbsp;=&nbsp; <span class="big">0</span> in the numbers you know</div>`;
+    const bitsEl = el.querySelector(".bits");
+    const binEl = el.querySelector(".bin");
+    const bigEl = el.querySelector(".big");
+    places.forEach((p, i) => {
+      const b = document.createElement("button");
+      b.className = "bit";
+      b.innerHTML = `<span class="bit-val">0</span><span class="bit-place">${p}</span>`;
+      b.addEventListener("click", () => {
+        bits[i] = bits[i] ? 0 : 1;
+        b.classList.toggle("on", !!bits[i]);
+        b.querySelector(".bit-val").textContent = bits[i];
+        const total = bits.reduce((s, on, j) => s + (on ? places[j] : 0), 0);
+        binEl.textContent = bits.join("");
+        bigEl.textContent = total;
+      });
+      bitsEl.appendChild(b);
+    });
+  },
+  caesar(el) {
+    el.innerHTML = `
+      <div class="cipher-row">
+        <div class="cipher-io"><label>Your message</label>
+          <input class="cipher-input" type="text" value="HELLO" maxlength="40" /></div>
+        <div class="cipher-slider-row">
+          <input type="range" min="0" max="25" value="3" />
+          <span class="cipher-shift">shift = 3</span>
+        </div>
+        <div class="cipher-io"><label>Scrambled (encrypted)</label>
+          <div class="cipher-output"></div></div>
+      </div>`;
+    const inp = el.querySelector(".cipher-input");
+    const slider = el.querySelector("input[type=range]");
+    const shiftLabel = el.querySelector(".cipher-shift");
+    const out = el.querySelector(".cipher-output");
+    const enc = (text, k) =>
+      text.replace(/[a-z]/gi, (c) => {
+        const base = c <= "Z" ? 65 : 97;
+        return String.fromCharCode(((c.charCodeAt(0) - base + k) % 26) + base);
+      });
+    const update = () => {
+      const k = Number(slider.value);
+      shiftLabel.textContent = `shift = ${k}`;
+      out.textContent = enc(inp.value, k) || "…";
+    };
+    inp.addEventListener("input", update);
+    slider.addEventListener("input", update);
+    update();
+  },
+  qubit(el) {
+    el.innerHTML = `
+      <div class="qubit-wrap">
+        <div class="coin" id="qcoin">?</div>
+        <div class="qubit-controls">
+          <div class="qubit-btns">
+            <button class="lab-ghost q-spin">Spin (superposition)</button>
+            <button class="lab-run q-measure">Measure</button>
+          </div>
+          <div class="qubit-state">Right now it's undecided — spinning between 0 and 1.</div>
+          <div class="qubit-tally">measured so far → 0: 0 &nbsp; 1: 0</div>
+        </div>
+      </div>`;
+    const coin = el.querySelector("#qcoin");
+    const stateEl = el.querySelector(".qubit-state");
+    const tally = el.querySelector(".qubit-tally");
+    let spinning = true;
+    let counts = { 0: 0, 1: 0 };
+    coin.classList.add("spinning");
+    el.querySelector(".q-spin").addEventListener("click", () => {
+      spinning = true;
+      coin.classList.add("spinning");
+      coin.textContent = "?";
+      stateEl.textContent = "In superposition — both 0 and 1 at once, until you measure it.";
+    });
+    el.querySelector(".q-measure").addEventListener("click", () => {
+      const r = Math.random() < 0.5 ? 0 : 1;
+      spinning = false;
+      coin.classList.remove("spinning");
+      coin.textContent = r;
+      counts[r]++;
+      stateEl.textContent = `Measured! It collapsed to |${r}⟩. Before you looked, it was genuinely both — measuring forced it to pick.`;
+      tally.textContent = `measured so far → 0: ${counts[0]}   1: ${counts[1]}`;
+    });
+  },
+};
+
+// ---------------------------------------------------------------------------
+// Voice — a real teacher talks, and you can talk back. Uses the browser's
+// built-in Web Speech API (no server, no cost). Both degrade gracefully:
+// the buttons stay hidden on browsers that don't support them.
+// ---------------------------------------------------------------------------
+const voiceToggle = $("#voice-toggle");
+const micBtn = $("#mic-btn");
+
+// --- Text to speech: the teacher reads its replies aloud ---
+const synth = window.speechSynthesis;
+let readAloud = false;
+if (synth) {
+  voiceToggle.hidden = false;
+  voiceToggle.addEventListener("click", () => {
+    readAloud = !readAloud;
+    voiceToggle.setAttribute("aria-pressed", String(readAloud));
+    voiceToggle.textContent = readAloud ? "🔊 Reading aloud" : "🔊 Read aloud";
+    if (!readAloud) synth.cancel();
+  });
+}
+function speak(text) {
+  if (!synth || !readAloud || !text) return;
+  // Strip code blocks / markdown so it reads naturally.
+  const clean = text.replace(/```[\s\S]*?```/g, " (see the code) ").replace(/[`*_#>]/g, "");
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(clean);
+  u.rate = 1.0;
+  u.pitch = 1.05;
+  synth.speak(u);
+}
+
+// --- Speech to text: the student speaks instead of typing ---
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recog = null;
+let listening = false;
+if (SR) {
+  micBtn.hidden = false;
+  recog = new SR();
+  recog.lang = "en-US";
+  recog.interimResults = true;
+  recog.continuous = false;
+  recog.addEventListener("result", (e) => {
+    let txt = "";
+    for (let i = 0; i < e.results.length; i++) txt += e.results[i][0].transcript;
+    input.value = txt;
+    input.style.height = "auto";
+    input.style.height = Math.min(input.scrollHeight, 160) + "px";
+    if (e.results[e.results.length - 1].isFinal) {
+      stopListening();
+      if (input.value.trim()) composer.requestSubmit();
+    }
+  });
+  recog.addEventListener("end", stopListening);
+  recog.addEventListener("error", stopListening);
+  micBtn.addEventListener("click", () => {
+    if (listening) { stopListening(); return; }
+    try { recog.start(); listening = true; micBtn.classList.add("listening"); micBtn.title = "Listening… click to stop"; input.focus(); }
+    catch (_) { /* already started */ }
+  });
+}
+function stopListening() {
+  listening = false;
+  micBtn.classList.remove("listening");
+  micBtn.title = "Speak instead of typing";
+  try { recog && recog.stop(); } catch (_) {}
+}
 
 // ---------------------------------------------------------------------------
 // Code Lab: a real Python runner in the browser via Pyodide (Python -> WASM).
