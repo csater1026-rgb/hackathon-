@@ -1,0 +1,324 @@
+<title>Class of One</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  /* ---------- Tokens: LIGHT (bare :root) ---------- */
+  :root {
+    --ground: #f5f4ef;
+    --surface: #ffffff;
+    --surface-2: #ece9e0;
+    --line: #dcd8cd;
+    --ink: #1c212a;
+    --ink-dim: #59616d;
+    --amber: #9a6a0e;
+    --amber-bg: #f3e7c6;
+    --machine: #55667a;
+    --machine-bg: #eef1f4;
+    --right: #2f7d52;
+    --wrong: #ad4b47;
+    --shadow: 0 1px 2px rgba(0,0,0,.05), 0 12px 32px rgba(20,24,32,.08);
+  }
+  /* ---------- Tokens: DARK (system default, unless user forced light) ---------- */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #12161d;
+      --surface: #191f28;
+      --surface-2: #1e2530;
+      --line: #2c333f;
+      --ink: #ece7dd;
+      --ink-dim: #9a958a;
+      --amber: #edb54a;
+      --amber-bg: #2a2314;
+      --machine: #8ba3bb;
+      --machine-bg: #1a222c;
+      --right: #77c79a;
+      --wrong: #db8a86;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 16px 40px rgba(0,0,0,.35);
+    }
+  }
+  /* ---------- Tokens: DARK (explicit toggle) ---------- */
+  :root[data-theme="dark"] {
+    --ground: #12161d;
+    --surface: #191f28;
+    --surface-2: #1e2530;
+    --line: #2c333f;
+    --ink: #ece7dd;
+    --ink-dim: #9a958a;
+    --amber: #edb54a;
+    --amber-bg: #2a2314;
+    --machine: #8ba3bb;
+    --machine-bg: #1a222c;
+    --right: #77c79a;
+    --wrong: #db8a86;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 16px 40px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    font-size: 17px;
+  }
+  .serif { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif; }
+  .mono { font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace; }
+
+  .page { max-width: 880px; margin: 0 auto; padding: 0 24px 80px; }
+
+  .eyebrow {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 2.5px;
+    color: var(--amber); font-weight: 700;
+  }
+  h1, h2, h3 { text-wrap: balance; }
+  a { color: var(--amber); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 72px 0 40px; }
+  .brand { display: flex; align-items: baseline; gap: 12px; }
+  .diamond { color: var(--amber); font-size: 20px; line-height: 1; }
+  .brand-name { font-size: 15px; font-weight: 700; letter-spacing: .3px; }
+  .brand-sep { color: var(--ink-dim); }
+  .brand-tag { color: var(--ink-dim); font-size: 15px; }
+
+  .hero h1 {
+    font-size: clamp(38px, 8vw, 68px); line-height: 1.02; margin: 26px 0 0;
+    font-weight: 600; letter-spacing: -.5px;
+  }
+  .hero h1 .u {
+    background-image: linear-gradient(transparent 62%, var(--amber-bg) 62%);
+    padding: 0 .06em;
+  }
+  .lede {
+    font-size: clamp(18px, 2.4vw, 22px); color: var(--ink-dim); margin: 22px 0 0;
+    max-width: 34ch;
+  }
+
+  /* ---------- The contrast (thesis) ---------- */
+  .thesis { margin-top: 30px; }
+  .split {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px;
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px; box-shadow: var(--shadow);
+  }
+  .card .tag {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 1.6px; font-weight: 700;
+    display: inline-block; margin-bottom: 12px;
+  }
+  .card.machine { background: var(--machine-bg); }
+  .card.machine .tag { color: var(--machine); }
+  .card.teacher .tag { color: var(--right); }
+
+  .term { font-size: 14px; line-height: 1.7; }
+  .term .you { color: var(--ink-dim); }
+  .term .out { color: var(--machine); }
+  .term pre {
+    margin: 8px 0; padding: 10px 12px; background: rgba(127,140,160,.12);
+    border-radius: 8px; overflow-x: auto; font-size: 13px; color: var(--ink);
+  }
+  .cursor { display: inline-block; width: 8px; height: 15px; background: var(--machine);
+    vertical-align: -2px; margin-left: 2px; animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .teacher .say { font-size: 18px; line-height: 1.55; }
+  .card .verdict {
+    margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--line);
+    font-size: 13.5px; color: var(--ink-dim);
+  }
+  .card.machine .verdict b { color: var(--wrong); font-weight: 600; }
+  .card.teacher .verdict b { color: var(--right); font-weight: 600; }
+
+  .thesis-line {
+    margin-top: 26px; font-size: clamp(20px, 3vw, 27px); line-height: 1.4;
+    font-weight: 500;
+  }
+  .thesis-line .hl { color: var(--amber); }
+
+  /* ---------- Generic section ---------- */
+  section { padding-top: 56px; }
+  section > h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: var(--ink-dim);
+    font-weight: 700; margin: 0 0 18px; display: flex; align-items: center; gap: 12px;
+  }
+  section > h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* who */
+  .who {
+    background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--amber);
+    border-radius: 12px; padding: 26px 28px; box-shadow: var(--shadow);
+  }
+  .who .name { font-size: 24px; font-weight: 600; margin: 0; }
+  .who p { margin: 12px 0 0; font-size: 18px; }
+  .who .pull { color: var(--ink); }
+
+  /* barrier */
+  .barrier {
+    font-size: clamp(24px, 4vw, 36px); line-height: 1.25; font-weight: 500; margin: 0;
+    letter-spacing: -.3px;
+  }
+  .barrier .q { color: var(--amber); }
+  .barrier + .sub { color: var(--ink-dim); font-size: 17px; margin-top: 16px; max-width: 60ch; }
+
+  /* how it works */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .feature {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px;
+  }
+  .feature h3 { margin: 0; font-size: 17px; display: flex; align-items: center; gap: 9px; }
+  .feature .ico { font-size: 18px; }
+  .feature p { margin: 8px 0 0; font-size: 14.5px; color: var(--ink-dim); line-height: 1.55; }
+  .feature .why { color: var(--right); font-weight: 600; }
+
+  /* try it / links */
+  .cta {
+    margin-top: 20px; background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: 14px; padding: 24px 26px; display: flex; flex-wrap: wrap;
+    align-items: center; justify-content: space-between; gap: 18px;
+  }
+  .cta .big { font-size: 19px; font-weight: 600; }
+  .cta .big span { color: var(--ink-dim); font-weight: 400; font-size: 15px; display: block; margin-top: 4px; }
+  .links { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn {
+    text-decoration: none; padding: 11px 18px; border-radius: 10px; font-weight: 600; font-size: 15px;
+    border: 1px solid var(--line);
+  }
+  .btn.primary { background: var(--amber); color: #1a1405; border-color: transparent; }
+  .btn.ghost { background: transparent; color: var(--ink); }
+
+  /* disclosures / footer */
+  .foot { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 28px; font-size: 13.5px; color: var(--ink-dim); }
+  .foot h4 { margin: 0 0 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--ink); }
+  .foot p { margin: 0 0 6px; }
+  .foot .mono { font-size: 12.5px; }
+  .sign { margin-top: 28px; font-size: 13px; color: var(--ink-dim); text-align: center; }
+
+  @media (max-width: 680px) {
+    .split, .grid, .foot { grid-template-columns: 1fr; }
+    .hero { padding-top: 52px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cursor { animation: none; }
+  }
+</style>
+
+<div class="page">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="brand">
+      <span class="diamond">◆</span>
+      <span class="brand-name">CLASS OF ONE</span>
+      <span class="brand-sep">·</span>
+      <span class="brand-tag serif">the teacher you never had</span>
+    </div>
+    <h1 class="serif">Everyone gave kids <span class="u">answers</span>.<br />We gave one kid a <span class="u">teacher</span>.</h1>
+    <p class="lede">An AI computer-science teacher for the student whose school has none.</p>
+  </header>
+
+  <!-- THESIS: the contrast -->
+  <div class="thesis">
+    <div class="eyebrow">The idea</div>
+    <div class="split">
+      <div class="card machine">
+        <span class="tag">An answer machine</span>
+        <div class="term mono">
+          <div class="you">you: my code has an error</div>
+          <div class="out">&gt; here's the fixed code:</div>
+          <pre>for i in range(10):
+    print(i)</pre>
+          <div class="out">&gt; <span class="cursor"></span></div>
+        </div>
+        <div class="verdict">You copy it. It works. <b>You learned nothing.</b></div>
+      </div>
+      <div class="card teacher">
+        <span class="tag">A teacher</span>
+        <div class="say serif">"Before I say anything — what did you expect to happen, and what actually happened? Even the exact error helps. Let's look together."</div>
+        <div class="verdict">You figure it out yourself. <b>It sticks.</b></div>
+      </div>
+    </div>
+    <p class="thesis-line serif">AI gave everyone access to <span class="hl">answers</span>. Almost no one has access to a <span class="hl">teacher</span>. For a kid with none, that gap is the whole problem — so we built the teacher, not another answer box.</p>
+  </div>
+
+  <!-- WHO -->
+  <section>
+    <h2>Who we built it for</h2>
+    <div class="who">
+      <p class="name serif">Marcus, 15.</p>
+      <p>A curious student at a rural high school with <span class="pull">no computer-science teacher</span> and no one to ask when he gets stuck. He has a locked-down school Chromebook, patchy wifi, and real curiosity about code and AI — and every door into the subject assumes a teacher he doesn't have.</p>
+    </div>
+  </section>
+
+  <!-- BARRIER -->
+  <section>
+    <h2>The barrier we remove</h2>
+    <p class="barrier serif"><span class="q">"There's no one to ask</span> when I get stuck — and the whole field is invisible from where I'm standing."</p>
+    <p class="sub">The barrier isn't a lack of access to AI. It's that access to <em>answers</em> is not access to a <em>teacher</em> — and that the fields beyond "learn to code" (security, networking, quantum) have no on-ramp for someone learning alone.</p>
+  </section>
+
+  <!-- HOW -->
+  <section>
+    <h2>How it works</h2>
+    <div class="grid">
+      <div class="feature">
+        <h3><span class="ico">🎓</span> A Socratic teacher</h3>
+        <p>It withholds finished answers on purpose — asks what you tried, gives escalating hints, and lets you steer with <em>“nudge / really stuck / I’ve got it.”</em> <span class="why">A teacher makes you think.</span></p>
+      </div>
+      <div class="feature">
+        <h3><span class="ico">🗺️</span> The whole field</h3>
+        <p>Nine guided tracks (46 lessons): programming, cybersecurity, networking, how computers work, databases, AI, algorithms, game dev, quantum. <span class="why">The rooms no one shows you exist.</span></p>
+      </div>
+      <div class="feature">
+        <h3><span class="ico">🧠</span> It remembers you</h3>
+        <p>Tell it your name and interests once; it weaves your world into examples and links new ideas to lessons you’ve finished across every field. <span class="why">A teacher knows you.</span></p>
+      </div>
+      <div class="feature">
+        <h3><span class="ico">🎤</span> You can talk to it</h3>
+        <p>It reads replies aloud and you can answer with your voice — built into the browser, no cost. <span class="why">A teacher speaks — and it’s a reading/typing bridge.</span></p>
+      </div>
+      <div class="feature">
+        <h3><span class="ico">⌨️</span> Run real code, on a Chromebook</h3>
+        <p>A Code Lab runs actual Python in the browser with nothing to install, and hands your errors straight to the teacher. <span class="why">A teacher lets you do it.</span></p>
+      </div>
+      <div class="feature">
+        <h3><span class="ico">✨</span> Play-with-it widgets</h3>
+        <p>Flip switches to build a number in binary, drag a Caesar cipher, spin and measure a qubit. <span class="why">Some ideas only click when you touch them.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRY IT -->
+  <section>
+    <h2>See it yourself</h2>
+    <div class="cta">
+      <div class="big">Open it and start learning.<span>No login, no install — it loads on a school Chromebook.</span></div>
+      <div class="links">
+        <a class="btn primary" href="https://hackathon-tau-beryl.vercel.app" target="_blank" rel="noopener">Live demo →</a>
+        <a class="btn ghost" href="https://github.com/csater1026-rgb/hackathon-" target="_blank" rel="noopener">GitHub repo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER: disclosures -->
+  <div class="foot">
+    <div>
+      <h4>Required disclosures</h4>
+      <p><b>AI tools:</b> Featherless AI (serverless model API) as the live teacher — default model <span class="mono">Mistral-Nemo-Instruct</span>; Claude Code as a coding assistant during the build.</p>
+      <p><b>Datasets:</b> none — no training, scraped, or collected data. All lesson content and teaching instructions were written by us.</p>
+      <p><b>Other:</b> Pyodide (open-source Python-in-WebAssembly) powers the Code Lab.</p>
+    </div>
+    <div>
+      <h4>Built for</h4>
+      <p>Suvidha AI Virtual Hackathon 2026 · prompt: make learning accessible to someone locked out of it.</p>
+      <h4 style="margin-top:16px">Team</h4>
+      <p>[ your team name &amp; members here ]</p>
+      <p class="mono">Every commit is inside the Aug 15–21 build window.</p>
+    </div>
+  </div>
+
+  <p class="sign serif">◆ Class of One — because no kid should be locked out of a field just because their school never opened the door.</p>
+
+</div>
