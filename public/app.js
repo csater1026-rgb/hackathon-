@@ -794,7 +794,7 @@ function markDoneAndAdvance() {
   if (next) {
     addMessage("assistant", `Nice work — that's "${l.title}" done. ✓ Whenever you're ready, click "${next.title}" on the left and we'll keep going.`);
   } else {
-    addMessage("assistant", `That's the whole ${track.title} track finished — every lesson done. ✓ You just taught yourself a field of computer science with no teacher in your school. That's the entire point. Want to go deeper? Hit "📚 Go further" on the left for free courses (some with real certificates). Or pick a new field up top. 🎉`);
+    addMessage("assistant", `That's the whole ${track.title} track finished — every lesson done. ✓ You just taught yourself a field of computer science with no teacher in your school. That's the entire point. Now open "🗺️ Your roadmap" on the left — it shows exactly what to build next, what to learn after this, free courses (some with real certificates), and where this path can take you. 🎉`);
   }
 }
 
@@ -905,35 +905,58 @@ $("#notes-forget").addEventListener("click", () => {
 // Go further — free, reputable resources for the current field, so a student
 // with no teacher also knows WHERE to keep learning (and earn free certs).
 // ---------------------------------------------------------------------------
-const furtherModal = $("#further-modal");
-function openFurther(open) {
+const roadmapModal = $("#roadmap-modal");
+function stageHTML({ state: st, icon, title, sub, inner }) {
+  return `<div class="rm-stage ${st || ""}">
+    <div class="rm-dot">${icon}</div>
+    <div class="rm-content">
+      <div class="rm-title">${title}</div>
+      <div class="rm-sub">${sub}</div>
+      ${inner}
+    </div>
+  </div>`;
+}
+function openRoadmap(open) {
   if (open) {
     const t = currentTrack();
-    $("#further-heading").textContent = `📚 Keep learning: ${t.title}`;
-    $("#further-sub").textContent = "Free places to go deeper — a 🎓 means you can earn a real certificate for free.";
-    const list = $("#resource-list");
-    list.innerHTML = "";
-    (t.resources || []).forEach((r) => {
-      const a = document.createElement("a");
-      a.className = "resource";
-      a.href = r.url;
-      a.target = "_blank";
-      a.rel = "noopener noreferrer";
-      a.innerHTML = `
-        <span class="r-main">
-          <span class="r-name">${r.name}</span>
-          <span class="r-note">${r.note}</span>
-        </span>
+    const rm = ROADMAPS[t.id] || { build: [], deeper: [], careers: [] };
+    const doneCount = t.lessons.filter((l) => state.done[l.id]).length;
+    const allDone = doneCount === t.lessons.length;
+
+    $("#roadmap-heading").textContent = `🗺️ ${t.title} roadmap`;
+    $("#roadmap-sub").textContent = "Where you are, and exactly what to do next. There's always a next step.";
+
+    const foundations = `<div class="rm-lessons">` + t.lessons.map((l) =>
+      `<div class="rm-lesson ${state.done[l.id] ? "done" : ""}"><span class="mk">${state.done[l.id] ? "✓" : "○"}</span>${l.title}</div>`
+    ).join("") + `</div>`;
+
+    const buildChips = `<div class="chips">` + rm.build.map((b) => `<span class="chip build">🔨 ${b}</span>`).join("") + `</div>`;
+    const deeperChips = `<div class="chips">` + rm.deeper.map((d) => `<span class="chip">${d}</span>`).join("") + `</div>`;
+    const careerChips = `<div class="chips">` + rm.careers.map((c) => `<span class="chip career">🧭 ${c}</span>`).join("") + `</div>`;
+    const resList = `<div class="resource-list">` + (t.resources || []).map((r) =>
+      `<a class="resource" href="${r.url}" target="_blank" rel="noopener noreferrer">
+        <span class="r-main"><span class="r-name">${r.name}</span><span class="r-note">${r.note}</span></span>
         ${r.cert ? `<span class="r-cert">🎓 free cert</span>` : ""}
-        <span class="r-arrow" aria-hidden="true">↗</span>`;
-      list.appendChild(a);
-    });
+        <span class="r-arrow" aria-hidden="true">↗</span></a>`
+    ).join("") + `</div>`;
+
+    $("#roadmap-body").innerHTML =
+      stageHTML({ state: allDone ? "done" : "active", icon: allDone ? "✓" : "1",
+        title: "Learn the foundations", sub: `${doneCount} of ${t.lessons.length} lessons done — right here in Class of One`, inner: foundations }) +
+      stageHTML({ icon: "🔨", title: "Build something with it",
+        sub: "The best way to make it stick — small projects you can actually finish", inner: buildChips }) +
+      stageHTML({ icon: "📈", title: "Learn these next",
+        sub: "The natural next topics once the basics click", inner: deeperChips }) +
+      stageHTML({ icon: "🎓", title: "Free courses & certificates",
+        sub: "Go deeper for free — a 🎓 means you can earn a real certificate", inner: resList }) +
+      stageHTML({ icon: "🧭", title: "Where it can take you",
+        sub: "Real careers this path opens up", inner: careerChips });
   }
-  furtherModal.hidden = !open;
+  roadmapModal.hidden = !open;
 }
-$("#further-btn").addEventListener("click", () => openFurther(true));
-$("#further-close").addEventListener("click", () => openFurther(false));
-furtherModal.addEventListener("click", (e) => { if (e.target === furtherModal) openFurther(false); });
+$("#roadmap-btn").addEventListener("click", () => openRoadmap(true));
+$("#roadmap-close").addEventListener("click", () => openRoadmap(false));
+roadmapModal.addEventListener("click", (e) => { if (e.target === roadmapModal) openRoadmap(false); });
 
 // ---------------------------------------------------------------------------
 // Interactive widgets (manipulatives) — some ideas you have to PLAY with to
@@ -971,6 +994,59 @@ function renderDiagram(lesson) {
     <p class="diagram-caption">${d.caption}</p>`;
   messagesEl.insertBefore(card, messagesEl.firstChild);
 }
+
+// ---------------------------------------------------------------------------
+// Roadmaps — the part self-learners miss most: what to do NEXT. For each field,
+// concrete projects to build, topics to learn next, and where it can lead.
+// Combined with the lessons (foundations) and free resources into one path.
+// ---------------------------------------------------------------------------
+const ROADMAPS = {
+  prog: {
+    build: ["A number-guessing game", "A quiz that scores itself", "A tip or grade calculator"],
+    deeper: ["Functions & reusing code", "Lists and dictionaries", "Reading & writing files", "A first web page with JavaScript"],
+    careers: ["Software developer", "Web developer", "Automation engineer"],
+  },
+  sec: {
+    build: ["A password-strength checker", "A Caesar-cipher encoder/decoder", "A quiz that spots phishing emails"],
+    deeper: ["Hashing & salting", "Common web attacks (XSS, SQL injection)", "Capture-the-flag challenges", "Networking for security"],
+    careers: ["Security analyst", "Penetration tester", "Security engineer"],
+  },
+  net: {
+    build: ["Map what happens when you load a site", "Diagram your home network", "Look up a domain's real address"],
+    deeper: ["The OSI model", "TCP vs UDP", "How HTTPS keeps you safe", "Subnets & IP addressing"],
+    careers: ["Network engineer", "Systems administrator", "Cloud / infrastructure engineer"],
+  },
+  sys: {
+    build: ["Convert numbers to binary in code", "A calculator that shows its steps", "Explain how a program runs to a friend"],
+    deeper: ["Logic gates & how a CPU adds", "How memory stores variables", "Assembly basics", "How an OS shares the processor"],
+    careers: ["Embedded / hardware engineer", "Systems programmer", "Computer engineer"],
+  },
+  data: {
+    build: ["Design tables for an app you use", "Write queries to answer questions", "A tiny grade or contacts tracker"],
+    deeper: ["SQL joins", "Primary & foreign keys", "Indexes & why queries are fast", "Spreadsheets → real databases"],
+    careers: ["Data analyst", "Database administrator", "Backend developer"],
+  },
+  ai: {
+    build: ["Train an image classifier (Teachable Machine)", "A chatbot with its own personality", "Predict something from a small dataset"],
+    deeper: ["How training actually works", "Neural networks in depth", "Prompting & using LLMs well", "Bias, safety & ethics"],
+    careers: ["Machine-learning engineer", "Data scientist", "AI researcher"],
+  },
+  algo: {
+    build: ["Code binary search yourself", "Visualize a sorting algorithm", "Solve 5 beginner practice problems"],
+    deeper: ["Big-O notation", "Recursion", "Stacks, queues & trees", "Graph algorithms"],
+    careers: ["Software engineer", "Competitive programmer", "Backend / systems engineer"],
+  },
+  game: {
+    build: ["A Pong or Snake clone", "A dot you move with arrow keys", "A simple collision game"],
+    deeper: ["Game loops & frame timing", "Sprites & animation", "Physics & collisions", "2D → 3D in an engine like Godot"],
+    careers: ["Game developer", "Graphics / engine programmer", "Technical artist"],
+  },
+  quantum: {
+    build: ["Build a circuit in IBM Quantum Composer", "Run a coin-flip qubit experiment", "Explain superposition to a friend"],
+    deeper: ["Qubits & the Bloch sphere", "Quantum gates", "Entanglement & teleportation", "Grover's & Shor's algorithms"],
+    careers: ["Quantum software developer", "Research scientist", "Quantum hardware engineer"],
+  },
+};
 
 const DIAGRAMS = {
   website: {

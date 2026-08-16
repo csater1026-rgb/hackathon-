@@ -78,10 +78,13 @@ A web app with three parts, each traceable straight back to Marcus:
    measure a **qubit**. Structural ideas get a hand-drawn **SVG diagram** (how
    a website loads, packets, a neural network, a database table) — tiny, always
    loading, theme-aware, no external images. Show, don't tell.
-7. **"Go further" — free courses per field.** A student with no teacher also
-   doesn't know *where* the good free material is. Every field links to
-   vetted, free resources (freeCodeCamp, CS50, Elements of AI, TryHackMe, IBM
-   Quantum, and more), flagging the ones that grant a **free certificate**.
+7. **A roadmap for every field — because "what's next?" is the hardest part.**
+   For a self-learner, not knowing where to go next is often the real wall.
+   Each field has a **"Your roadmap"** view: a staged path showing where you
+   are (foundations + your progress), concrete **projects to build**, the
+   **topics to learn next**, curated **free courses & certificates**
+   (freeCodeCamp, CS50, Elements of AI, IBM Quantum…), and the **careers** it
+   leads to. There's always a clear next step.
 8. **Progress that just works.** No login, no account, no setup. Progress,
    chats, memory, and preferences are saved in the browser (`localStorage`),
    so it loads instantly on a locked-down school Chromebook with zero friction.
@@ -167,7 +170,7 @@ We're being honest here, because the rubric rewards it.
 | Voice: teacher reads aloud (TTS) + speak-to-type (STT) via Web Speech API | **Fully built.** Uses the browser's own speech engine; hidden where unsupported. |
 | Interactive widgets: binary flipper, Caesar cipher, qubit | **Fully built.** Real, self-contained, no libraries. |
 | Hand-drawn SVG diagrams (website, packets, neural net, table) | **Fully built.** Inline SVG, theme-aware, no external images. |
-| "Go further" free-resource lists per field, with free-cert flags | **Fully built.** Curated real links; opens per current field. |
+| Per-field roadmap: foundations→build→learn-next→free courses/certs→careers | **Fully built.** Staged path per field; reflects live progress. |
 | Progress tracking + "stuck" controls, saved locally | **Fully built.** |
 | Serverless proxy that keeps the API key private | **Fully built.** |
 | **Demo mode** (scripted replies when no key is set) | **Mocked on purpose** — a small scripted fallback so the public link is never blank. Clearly labelled "demo mode" in the UI. The real teacher is the live path. |
