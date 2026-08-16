@@ -172,6 +172,19 @@
   .feature p { margin: 8px 0 0; font-size: 14.5px; color: var(--ink-dim); line-height: 1.55; }
   .feature .why { color: var(--right); font-weight: 600; }
 
+  /* gateway arc */
+  .gateway-lede { font-size: clamp(19px, 2.6vw, 24px); line-height: 1.45; margin: 0 0 4px; max-width: 40ch; }
+  .arc { display: flex; align-items: stretch; gap: 10px; margin-top: 22px; }
+  .arc .step {
+    flex: 1 1 0; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 13px; padding: 16px 16px 18px; box-shadow: var(--shadow);
+  }
+  .arc .step.hl { border-color: var(--amber); background: var(--amber-bg); }
+  .arc .step .n { font-size: 10.5px; text-transform: uppercase; letter-spacing: 1.4px; color: var(--ink-dim); }
+  .arc .step .t { font-size: 21px; font-weight: 600; margin: 7px 0 6px; }
+  .arc .step .d { font-size: 13px; color: var(--ink-dim); line-height: 1.5; }
+  .arc .arrow { align-self: center; color: var(--amber); font-size: 20px; flex: none; }
+
   /* try it / links */
   .cta {
     margin-top: 20px; background: var(--surface-2); border: 1px solid var(--line);
@@ -199,6 +212,8 @@
   @media (max-width: 680px) {
     .split, .grid, .foot { grid-template-columns: 1fr; }
     .hero { padding-top: 52px; }
+    .arc { flex-direction: column; }
+    .arc .arrow { transform: rotate(90deg); }
   }
   @media (prefers-reduced-motion: reduce) {
     .cursor { animation: none; }
@@ -216,7 +231,7 @@
       <span class="brand-tag serif">the teacher you never had</span>
     </div>
     <h1 class="serif">Everyone gave kids <span class="u">answers</span>.<br />We gave one kid a <span class="u">teacher</span>.</h1>
-    <p class="lede">An AI computer-science teacher for the student whose school has none.</p>
+    <p class="lede">An AI computer-science teacher for the student whose school has none — and the doorway into a whole field they were locked out of.</p>
   </header>
 
   <!-- THESIS: the contrast -->
@@ -284,8 +299,47 @@
         <p>A Code Lab runs actual Python in the browser with nothing to install, and hands your errors straight to the teacher. <span class="why">A teacher lets you do it.</span></p>
       </div>
       <div class="feature">
-        <h3><span class="ico">✨</span> Play-with-it widgets</h3>
-        <p>Flip switches to build a number in binary, drag a Caesar cipher, spin and measure a qubit. <span class="why">Some ideas only click when you touch them.</span></p>
+        <h3><span class="ico">✨</span> See it, then touch it</h3>
+        <p>Hand-drawn diagrams show the shape of an idea — how a website loads, a neural network, packets — and live widgets let you flip binary bits, run a cipher, or measure a qubit. <span class="why">Some ideas only click when you touch them.</span></p>
+      </div>
+      <div class="feature">
+        <h3><span class="ico">📚</span> Then it sends you further</h3>
+        <p>Every field hands you a shortlist of the best <em>free</em> courses — freeCodeCamp, CS50, Elements of AI, IBM Quantum — flagging the ones that grant a real certificate. <span class="why">A teacher opens the next door.</span></p>
+      </div>
+      <div class="feature">
+        <h3><span class="ico">🌍</span> Works where the student is</h3>
+        <p>No login, no install, nothing to buy. Progress saves in the browser, so it loads on a locked-down school Chromebook. <span class="why">The door is actually open.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GATEWAY -->
+  <section>
+    <h2>Not a destination — a doorway</h2>
+    <p class="gateway-lede serif">The point was never to answer one question. It takes a kid who was locked out, walks them all the way to the edge of the map — and then points past it.</p>
+    <div class="arc">
+      <div class="step">
+        <div class="n">Where they start</div>
+        <div class="t serif">Locked out</div>
+        <div class="d">No CS teacher, no one to ask, a whole field they can't even see.</div>
+      </div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="step hl">
+        <div class="n">What we give them</div>
+        <div class="t serif">A teacher</div>
+        <div class="d">Patient and Socratic. Remembers them. Talks with them.</div>
+      </div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="step">
+        <div class="n">What opens up</div>
+        <div class="t serif">Nine fields</div>
+        <div class="d">Code, security, networking, AI, quantum — the rooms they never knew existed.</div>
+      </div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="step">
+        <div class="n">Where it sends them</div>
+        <div class="t serif">Anywhere</div>
+        <div class="d">Free university courses and real certificates, to go as far as they want.</div>
       </div>
     </div>
   </section>
