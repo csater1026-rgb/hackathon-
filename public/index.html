@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class of One — the teacher you never had</title>
+  <meta name="description" content="A patient, Socratic CS teacher for students whose school has no CS teacher and no one to ask when they get stuck." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#chat-input">Skip to chat</a>
+
+  <!-- Sidebar: the learning path (solves "no teacher = no idea what's next") -->
+  <aside class="sidebar" aria-label="Your learning path">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">◆</span>
+      <div>
+        <div class="brand-name">Class of One</div>
+        <div class="brand-tag">the teacher you never had</div>
+      </div>
+    </div>
+
+    <div class="path-header">
+      <h2>Your path</h2>
+      <p class="path-sub">Learn to code, one small step at a time.</p>
+    </div>
+    <ol class="path" id="path" aria-label="Lessons"></ol>
+
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="progress-text">0 of 0 done</span>
+        <button class="reset-btn" id="reset-btn" title="Start over">reset</button>
+      </div>
+      <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar-outer">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main: the teacher -->
+  <main class="chat" aria-label="Chat with your teacher">
+    <header class="chat-header">
+      <div class="lesson-now">
+        <span class="lesson-eyebrow">Right now</span>
+        <h1 id="lesson-title">Loading…</h1>
+        <p id="lesson-goal" class="lesson-goal"></p>
+      </div>
+      <span class="mode-pill" id="mode-pill" title="Whether a live AI model is connected">checking…</span>
+    </header>
+
+    <div class="messages" id="messages" aria-live="polite" aria-atomic="false"></div>
+
+    <div class="stuck-row" id="stuck-row">
+      <span class="stuck-label">Feeling stuck?</span>
+      <button class="stuck-btn" data-stuck="little">Give me a nudge</button>
+      <button class="stuck-btn" data-stuck="lot">I'm really stuck</button>
+      <button class="stuck-btn" data-stuck="done">I think I've got it</button>
+    </div>
+
+    <form class="composer" id="composer">
+      <label class="sr-only" for="chat-input">Message your teacher</label>
+      <textarea id="chat-input" rows="1" placeholder="Ask your teacher anything… (no such thing as a dumb question)"></textarea>
+      <button type="submit" id="send-btn" aria-label="Send">Send</button>
+    </form>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
