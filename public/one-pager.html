@@ -185,6 +185,16 @@
   .arc .step .d { font-size: 13px; color: var(--ink-dim); line-height: 1.5; }
   .arc .arrow { align-self: center; color: var(--amber); font-size: 20px; flex: none; }
 
+  /* why it matters */
+  .stakes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stake {
+    background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--amber);
+    border-radius: 13px; padding: 24px 26px; box-shadow: var(--shadow);
+  }
+  .stake-big { font-size: clamp(21px, 2.8vw, 28px); line-height: 1.18; margin: 0 0 12px; font-weight: 600; }
+  .stake p { margin: 0; font-size: 15px; color: var(--ink-dim); line-height: 1.6; }
+  .stake p b { color: var(--ink); font-weight: 600; }
+
   /* try it / links */
   .cta {
     margin-top: 20px; background: var(--surface-2); border: 1px solid var(--line);
@@ -214,6 +224,7 @@
     .hero { padding-top: 52px; }
     .arc { flex-direction: column; }
     .arc .arrow { transform: rotate(90deg); }
+    .stakes { grid-template-columns: 1fr; }
   }
   @media (prefers-reduced-motion: reduce) {
     .cursor { animation: none; }
@@ -340,6 +351,21 @@
         <div class="n">Where it sends them</div>
         <div class="t serif">Anywhere</div>
         <div class="d">Free university courses and real certificates, to go as far as they want.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY IT MATTERS -->
+  <section>
+    <h2>Why it matters</h2>
+    <div class="stakes">
+      <div class="stake">
+        <div class="stake-big serif">Most schools never open the door.</div>
+        <p>A huge share of schools still offer <b>no real computer-science class</b> — and even fewer show students the <b>careers</b> behind it: security analyst, network engineer, data scientist, game developer. You can't choose a path you were never shown exists. For these students, the subject and every career in it simply stays invisible.</p>
+      </div>
+      <div class="stake">
+        <div class="stake-big serif">A $200 Chromebook is now enough.</div>
+        <p>Because it needs <b>no install, no account, and no admin rights</b>, the locked-down school Chromebook — the one device almost every student <em>does</em> have — can run <b>real Python</b> and explore security, networking, AI, and quantum. The cheapest, most restricted machine in the building just became a doorway into all of it.</p>
       </div>
     </div>
   </section>
