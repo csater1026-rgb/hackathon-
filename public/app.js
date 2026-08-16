@@ -264,6 +264,202 @@ const TRACKS = [
       },
     ],
   },
+  {
+    id: "ai",
+    icon: "🤖",
+    title: "Artificial Intelligence",
+    blurb: "How machines actually learn — and where they go wrong.",
+    field: "artificial intelligence and machine learning, at a conceptual level",
+    lessons: [
+      {
+        id: "ai-what-is",
+        title: "What AI actually is",
+        sub: "No magic",
+        goal: "Understand AI as finding patterns from many examples, not a thinking brain.",
+        opener:
+          "AI gets talked about like a genius robot brain, but the real idea is simpler and stranger. Imagine teaching a little kid to tell cats from dogs — but you're NOT allowed to give any rules, only to show them picture after picture and say 'cat' or 'dog'. Do you think they'd eventually get it? And if so… how? That 'how' is basically all of AI.",
+      },
+      {
+        id: "ai-learning",
+        title: "How machines learn from examples",
+        sub: "Training",
+        goal: "Understand training as adjusting guesses using feedback over many examples.",
+        opener:
+          "Here's the core trick of machine 'learning': guess, check how wrong you were, adjust, repeat — millions of times. Think about learning to shoot a basketball. When you miss short, what do you change on the next shot? That tiny adjust-from-the-error loop is exactly how a model trains. Walk me through your basketball adjustment.",
+      },
+      {
+        id: "ai-neural",
+        title: "The idea of a neural network",
+        sub: "Neurons & layers",
+        goal: "Get an intuition for a network as layers of simple units that vote and pass signals on.",
+        opener:
+          "A 'neural network' sounds intimidating, but picture a huge crowd guessing how many jellybeans are in a jar. Each person is bad alone, but if you combine everyone's guesses in a smart weighted way, the group gets scarily accurate. Why do you think a big group of simple guessers can beat one expert? Sit with that — it's the whole intuition.",
+      },
+      {
+        id: "ai-llms",
+        title: "How chatbots predict words",
+        sub: "Language models",
+        goal: "Understand a language model as a very good next-word predictor.",
+        opener:
+          "The chatbot you're talking to right now works on one deceptively simple job: predict the next word. Try it yourself — finish this: 'peanut butter and ___'. How did you know? Now here's the real question: if a machine got REALLY good at that one guessing game, across billions of sentences, why might it start to seem like it 'understands'?",
+      },
+      {
+        id: "ai-limits",
+        title: "Where AI goes wrong",
+        sub: "Bias & hallucination",
+        goal: "Understand why AI can be confidently wrong, and how to use it responsibly.",
+        opener:
+          "This is the most important AI lesson almost no one teaches: the machine can be totally confident and totally wrong — it can even make up facts that sound perfect. Given that it's just predicting likely words, why do you think it might invent a fake but convincing answer? And when should YOU double-check it instead of trusting it?",
+      },
+    ],
+  },
+  {
+    id: "algo",
+    icon: "🧩",
+    title: "Algorithms",
+    blurb: "How to solve problems in clever, fast ways.",
+    field: "algorithms and computational problem-solving",
+    lessons: [
+      {
+        id: "algo-what-is",
+        title: "What an algorithm really is",
+        sub: "Recipes for computers",
+        goal: "Understand an algorithm as a precise step-by-step method — and that some methods are far better than others.",
+        opener:
+          "An algorithm is just a recipe: exact steps to get a result. But here's what makes it interesting — some recipes are WAY better than others. Imagine finding 'Zhang' in a paper phone book. One way: start at page one and read every name. Is that how YOU would actually do it? Describe your real strategy — you're about to discover it has a famous name.",
+      },
+      {
+        id: "algo-search",
+        title: "Finding things fast",
+        sub: "Binary search",
+        goal: "Understand binary search: halving the possibilities each step beats checking one by one.",
+        opener:
+          "Let's play. I'm thinking of a number from 1 to 100. You get to guess, and I'll say 'higher' or 'lower'. What's your very first guess — and why that one? Your instinct here is one of the most powerful ideas in all of computing. Make your guess and tell me your reasoning.",
+      },
+      {
+        id: "algo-sorting",
+        title: "Putting things in order",
+        sub: "Sorting",
+        goal: "Understand why sorting matters and get intuition for how sorting algorithms work.",
+        opener:
+          "Sorting sounds boring until you realize that being IN ORDER is what makes everything else fast (like that number-guessing trick — it only works because the numbers are ordered). Picture a shuffled deck of cards in your hands. Describe, step by step, how you'd actually sort them. There's no wrong method — I just want your natural process.",
+      },
+      {
+        id: "algo-bigo",
+        title: "Why some code is slow",
+        sub: "Big-O intuition",
+        goal: "Get an intuition for how an algorithm's work grows as the input grows.",
+        opener:
+          "Two programs both work — but one finishes instantly and the other takes an hour on a big list. The difference is how the work GROWS as the input gets bigger. Quick thought experiment: if checking every name in a list of 100 takes 1 second, roughly how long for a list of 1000? Now — what about that number-halving search instead? Guess both.",
+      },
+      {
+        id: "algo-thinking",
+        title: "Breaking problems down",
+        sub: "Decomposition",
+        goal: "Learn to break a big, scary problem into small solvable pieces.",
+        opener:
+          "The real skill behind algorithms isn't memorizing them — it's taking a huge messy problem and chopping it into small pieces you actually know how to solve. Give me any big task you find overwhelming (planning a trip, organizing an event, anything). Let's practice slicing it into small steps together — that exact muscle is what programmers use every day.",
+      },
+    ],
+  },
+  {
+    id: "game",
+    icon: "🎮",
+    title: "Game Dev & Graphics",
+    blurb: "How computers draw moving worlds on a screen.",
+    field: "game development and computer graphics",
+    lessons: [
+      {
+        id: "game-loop",
+        title: "The heartbeat: the game loop",
+        sub: "Update, then draw",
+        goal: "Understand that games run a loop many times a second: update the world, then draw it.",
+        opener:
+          "Every video game, from Pong to the biggest 3D world, secretly does the same two things over and over, dozens of times a second. Think about a flipbook animation — a stack of slightly different drawings you flip through fast. What are the two repeating steps you think a game does each 'flip' to make things move? Take a guess.",
+      },
+      {
+        id: "game-pixels",
+        title: "Everything is a grid of pixels",
+        sub: "Pixels & coordinates",
+        goal: "Understand the screen as a grid of colored dots addressed by coordinates.",
+        opener:
+          "Your screen, up close, is just a giant grid of tiny colored dots called pixels. So if you wanted to tell the computer 'put a red dot near the top-left corner', what information do you think it needs from you? Hint: think about how you'd describe a single square's location on a piece of graph paper.",
+      },
+      {
+        id: "game-coords",
+        title: "Making things move",
+        sub: "Position & velocity",
+        goal: "Understand motion as changing an object's coordinates a little each frame.",
+        opener:
+          "Nothing on a screen really 'moves' — the computer just redraws it in a slightly different spot each frame, and your eyes do the rest. So if a dot is at position x = 10, and you want it to slide to the right, what should happen to that number on the next frame? What about the frame after that? Describe the pattern.",
+      },
+      {
+        id: "game-collision",
+        title: "Did they hit?",
+        sub: "Collision detection",
+        goal: "Get an intuition for detecting when two objects overlap.",
+        opener:
+          "In a game, how does the computer KNOW when the player touched the coin, or the ball hit the paddle? It has to check, every frame, whether two shapes overlap. Imagine two rectangles on graph paper. Without any math yet — just describe: how can you tell by looking whether two rectangles are overlapping or not?",
+      },
+      {
+        id: "game-3d",
+        title: "Faking a 3D world",
+        sub: "3D on a 2D screen",
+        goal: "Understand that 3D graphics are a 2D screen tricked into looking deep.",
+        opener:
+          "Here's a mind-bender: your screen is completely flat, yet 3D games look deep and real. It's an illusion built from clever tricks your eyes fall for. Think about drawing a cube on paper, or how far-away things look. What visual tricks make a flat picture FEEL 3D? Name every one you can think of — artists and game engines use the same ones.",
+      },
+    ],
+  },
+  {
+    id: "quantum",
+    icon: "⚛",
+    title: "Quantum Computing",
+    blurb: "Computing with the strange rules of the very small.",
+    field: "quantum computing, at a beginner-friendly conceptual level",
+    lessons: [
+      {
+        id: "q-why",
+        title: "Why quantum computers exist",
+        sub: "The motivation",
+        goal: "Understand that some problems have too many combinations for any normal computer.",
+        opener:
+          "Before any weird physics, one plain question: why would anyone WANT a totally new kind of computer? Imagine a lock with 300 switches, each on or off, and only one exact combination opens it. A normal computer tries combinations one after another. Do you think it could ever try them all? Guess how bad it gets — that impossibility is why quantum computing was invented.",
+      },
+      {
+        id: "q-qubit",
+        title: "Bits that are both at once",
+        sub: "Superposition",
+        goal: "Get an intuition for a qubit being a blend of 0 and 1 until measured.",
+        opener:
+          "A normal bit is either 0 or 1. A quantum bit — a qubit — can be a blend of both at the same time, until you look at it. Picture a coin spinning in the air: while it spins, is it heads or tails? What would you even call that in-between state? Sit with the spinning coin — that's the closest everyday thing to superposition.",
+      },
+      {
+        id: "q-entangle",
+        title: "Spooky connections",
+        sub: "Entanglement",
+        goal: "Get an intuition for entanglement: linked qubits whose results are correlated.",
+        opener:
+          "Einstein called this one 'spooky action at a distance' because it bothered him so much. Imagine two magic coins: you flip one here and one on the Moon, and somehow they ALWAYS land the same way, instantly. No message could travel that fast. Why do you think that idea drove physicists a little crazy? What feels impossible about it to you?",
+      },
+      {
+        id: "q-interference",
+        title: "How it finds the answer",
+        sub: "Interference",
+        goal: "Understand quantum computing as amplifying right answers and canceling wrong ones.",
+        opener:
+          "A quantum computer doesn't just 'try everything at once and magically pick the right one' — that's the myth. It's more like waves in water: waves can add up to get taller, or meet and cancel to nothing. Have you ever seen ripples cancel each other out? If you could make the WRONG answers cancel away and the RIGHT one add up loud, why would that be powerful?",
+      },
+      {
+        id: "q-reality",
+        title: "What they're really good at",
+        sub: "Hype vs reality",
+        goal: "Get a realistic picture: quantum computers are specialists, not a faster laptop.",
+        opener:
+          "Time to bust the hype. A quantum computer is NOT just a super-fast laptop — it's a strange specialist tool, amazing at a few specific problems and useless (even worse) at most everyday ones. Given what you now know about it, what KINDS of problems do you think it'd shine at — and what would still be better on your normal phone? Take your best guess.",
+      },
+    ],
+  },
 ];
 
 const STORAGE_KEY = "classofone.v2";
