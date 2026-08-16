@@ -538,6 +538,7 @@ function defaultState() {
     done: {},
     chats: {},
     profile: { name: "", about: "" },
+    seenWelcome: false,
   };
 }
 function loadState() {
@@ -894,12 +895,19 @@ $("#notes-save").addEventListener("click", () => {
     addMessage("assistant", `Got it — I'll remember that, ${state.profile.name}. 🧠`);
   }
 });
-$("#notes-forget").addEventListener("click", () => {
+// Two-step forget: ask "are you sure?" before wiping the memory.
+const forgetConfirm = $("#forget-confirm");
+$("#notes-forget").addEventListener("click", () => { forgetConfirm.hidden = false; });
+$("#forget-cancel").addEventListener("click", () => { forgetConfirm.hidden = true; });
+$("#forget-yes").addEventListener("click", () => {
   state.profile = { name: "", about: "" };
   saveState();
   notesName.value = "";
   notesAbout.value = "";
+  forgetConfirm.hidden = true;
 });
+// Reset the confirm prompt whenever the notes modal is opened fresh.
+$("#notes-toggle").addEventListener("click", () => { forgetConfirm.hidden = true; });
 
 // ---------------------------------------------------------------------------
 // Go further — free, reputable resources for the current field, so a student
@@ -1421,8 +1429,103 @@ $("#lab-ask").addEventListener("click", () => {
   }
 })();
 
+// ---------------------------------------------------------------------------
+// First-visit welcome + optional guided tour.
+// ---------------------------------------------------------------------------
+const welcomeModal = $("#welcome-modal");
+function dismissWelcome() {
+  welcomeModal.hidden = true;
+  state.seenWelcome = true;
+  saveState();
+}
+$("#welcome-skip").addEventListener("click", dismissWelcome);
+$("#welcome-tour").addEventListener("click", () => {
+  dismissWelcome();
+  startTour();
+});
+
+const TOUR_STEPS = [
+  { sel: "#track-picker", pos: "right", text: "Start here: pick a field. There are nine — from coding and cybersecurity to AI and quantum. Each one is a short guided path." },
+  { sel: "#messages", pos: "left", text: "Your teacher opens every lesson with a question. Just talk to it like a real tutor — there's genuinely no such thing as a dumb question." },
+  { sel: "#stuck-row", pos: "top", text: "Stuck? Ask for a small nudge or a bigger hint — it won't just hand you the answer. Hit “I think I've got it” to move on." },
+  { sel: "#lab-toggle", pos: "bottom", text: "The Code Lab runs real Python right in your browser — nothing to install, even on a school Chromebook." },
+  { sel: "#roadmap-btn", pos: "right", text: "Not sure what's next? Your roadmap shows what to build, what to learn next, free courses with certificates, and the careers it leads to." },
+  { sel: "#notes-toggle", pos: "bottom", text: "Tell your teacher about you here — your name and interests. It remembers you across every field." },
+  { sel: "#voice-toggle", pos: "bottom", text: "Prefer listening? Have the teacher read aloud — and use the mic to talk instead of type." },
+];
+
+let tourIdx = 0;
+let tourBackdrop = null;
+const tourEl = $("#tour");
+const tourBox = $("#tour-box");
+let tourTarget = null;
+
+function startTour() {
+  tourIdx = 0;
+  tourBackdrop = document.createElement("div");
+  tourBackdrop.className = "tour-backdrop";
+  tourBackdrop.addEventListener("click", endTour);
+  document.body.appendChild(tourBackdrop);
+  tourEl.hidden = false;
+  showTourStep();
+}
+function clearHighlight() {
+  if (tourTarget) { tourTarget.classList.remove("tour-highlight"); tourTarget = null; }
+}
+function endTour() {
+  clearHighlight();
+  tourEl.hidden = true;
+  if (tourBackdrop) { tourBackdrop.remove(); tourBackdrop = null; }
+}
+function showTourStep() {
+  clearHighlight();
+  // Skip steps whose target is missing or hidden (e.g. voice on unsupported browsers).
+  while (tourIdx < TOUR_STEPS.length) {
+    const el = document.querySelector(TOUR_STEPS[tourIdx].sel);
+    if (el && el.offsetParent !== null) break;
+    tourIdx++;
+  }
+  if (tourIdx >= TOUR_STEPS.length) { endTour(); return; }
+
+  const step = TOUR_STEPS[tourIdx];
+  const el = document.querySelector(step.sel);
+  tourTarget = el;
+  el.classList.add("tour-highlight");
+  el.scrollIntoView({ block: "center", behavior: "smooth" });
+
+  $("#tour-text").textContent = step.text;
+  $("#tour-count").textContent = `${tourIdx + 1} / ${TOUR_STEPS.length}`;
+  $("#tour-next").textContent = tourIdx === TOUR_STEPS.length - 1 ? "Done" : "Next";
+
+  // Position the tooltip after the scroll settles.
+  setTimeout(() => positionTour(el, step.pos), 260);
+}
+function positionTour(el, pos) {
+  const r = el.getBoundingClientRect();
+  const box = tourBox;
+  const bw = Math.min(300, window.innerWidth - 24);
+  box.style.maxWidth = bw + "px";
+  const bh = box.offsetHeight || 120;
+  let top, left;
+  if (pos === "right") { left = r.right + 14; top = r.top; }
+  else if (pos === "left") { left = r.left - bw - 14; top = r.top + 20; }
+  else if (pos === "top") { left = r.left; top = r.top - bh - 14; }
+  else { left = r.left; top = r.bottom + 14; } // bottom
+  // Clamp into the viewport.
+  left = Math.max(12, Math.min(left, window.innerWidth - bw - 12));
+  top = Math.max(12, Math.min(top, window.innerHeight - bh - 12));
+  box.style.left = left + "px";
+  box.style.top = top + "px";
+}
+$("#tour-next").addEventListener("click", () => { tourIdx++; showTourStep(); });
+$("#tour-skip").addEventListener("click", endTour);
+window.addEventListener("resize", () => {
+  if (!tourEl.hidden && tourTarget) positionTour(tourTarget, TOUR_STEPS[tourIdx].pos);
+});
+
 // Boot
 renderTracks();
 renderPath();
 renderLessonHeader();
 renderChat();
+if (!state.seenWelcome) welcomeModal.hidden = false;

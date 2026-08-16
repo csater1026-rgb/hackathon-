@@ -126,6 +126,13 @@ print("hello, world")
         <button class="lab-run" id="notes-save">Save</button>
         <button class="lab-ghost" id="notes-forget">Forget everything</button>
       </div>
+      <div class="forget-confirm" id="forget-confirm" hidden>
+        <span class="forget-q">Forget everything your teacher knows about you? This can't be undone.</span>
+        <div class="forget-btns">
+          <button class="lab-ghost" id="forget-cancel">Cancel</button>
+          <button class="danger-btn" id="forget-yes">Yes, forget it all</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -139,6 +146,33 @@ print("hello, world")
       </div>
       <p class="modal-sub" id="roadmap-sub">The whole path for this field — where you are, and exactly what to do next.</p>
       <div class="roadmap-body" id="roadmap-body"></div>
+    </div>
+  </div>
+
+  <!-- First-visit welcome: the real reason this exists, and an optional tour. -->
+  <div class="modal-overlay" id="welcome-modal" hidden>
+    <div class="modal welcome" role="dialog" aria-modal="true" aria-labelledby="welcome-heading">
+      <div class="welcome-mark" aria-hidden="true">◆</div>
+      <h2 id="welcome-heading">Welcome to Class of One</h2>
+      <p class="welcome-why">Somewhere right now there's a kid who's curious about computers — but their school has no computer-science teacher, and no one to ask when they get stuck. Talent is everywhere. Access isn't.</p>
+      <p class="welcome-why">I built this to be the teacher they don't have, so no one stays locked out of an entire field just because of where they happened to grow up. If that's you: welcome. Let's open some doors.</p>
+      <p class="welcome-ask">New here? Want a quick 30-second tour of how it works?</p>
+      <div class="welcome-actions">
+        <button class="lab-run" id="welcome-tour">Yes, show me around</button>
+        <button class="lab-ghost" id="welcome-skip">I'll explore on my own</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guided tour tooltip -->
+  <div class="tour" id="tour" hidden>
+    <div class="tour-box" id="tour-box">
+      <p class="tour-text" id="tour-text"></p>
+      <div class="tour-nav">
+        <span class="tour-count" id="tour-count"></span>
+        <button class="lab-ghost" id="tour-skip">Skip</button>
+        <button class="lab-run" id="tour-next">Next</button>
+      </div>
     </div>
   </div>
 
