@@ -46,10 +46,43 @@
         <h1 id="lesson-title">Loading…</h1>
         <p id="lesson-goal" class="lesson-goal"></p>
       </div>
-      <span class="mode-pill" id="mode-pill" title="Whether a live AI model is connected">checking…</span>
+      <div class="header-right">
+        <button class="lab-toggle" id="lab-toggle" aria-expanded="false" aria-controls="code-lab">⌨ Code Lab</button>
+        <span class="mode-pill" id="mode-pill" title="Whether a live AI model is connected">checking…</span>
+      </div>
     </header>
 
     <div class="messages" id="messages" aria-live="polite" aria-atomic="false"></div>
+
+    <!-- Code Lab: a real Python runner in the browser (Pyodide/WASM).
+         Removes a second barrier — Marcus's locked-down Chromebook can't
+         install Python, so this is where he actually runs and debugs code. -->
+    <section class="code-lab" id="code-lab" hidden aria-label="Code Lab">
+      <div class="lab-head">
+        <span class="lab-title">⌨ Code Lab · Python</span>
+        <span class="lab-status" id="lab-status">runs in your browser — nothing to install</span>
+        <button class="lab-close" id="lab-close" aria-label="Close Code Lab">✕</button>
+      </div>
+      <div class="lab-body">
+        <div class="lab-editor-wrap">
+          <label class="sr-only" for="lab-editor">Python code</label>
+          <textarea id="lab-editor" class="lab-editor" spellcheck="false" autocomplete="off"># Write Python here, then press Run.
+# Tip: get stuck? Send your error to your teacher below.
+
+print("hello, world")
+</textarea>
+          <div class="lab-actions">
+            <button class="lab-run" id="lab-run">▶ Run</button>
+            <button class="lab-ghost" id="lab-clear">Clear</button>
+            <button class="lab-ghost" id="lab-ask" title="Send your code and its output to your teacher">Ask teacher about this →</button>
+          </div>
+        </div>
+        <div class="lab-output-wrap">
+          <div class="lab-output-label">Output</div>
+          <pre class="lab-output" id="lab-output" aria-live="polite">Press ▶ Run to see what your code does.</pre>
+        </div>
+      </div>
+    </section>
 
     <div class="stuck-row" id="stuck-row">
       <span class="stuck-label">Feeling stuck?</span>

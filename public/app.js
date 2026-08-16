@@ -304,6 +304,117 @@ $("#reset-btn").addEventListener("click", () => {
   }
 });
 
+// ---------------------------------------------------------------------------
+// Code Lab: a real Python runner in the browser via Pyodide (Python -> WASM).
+// Marcus can't install Python on a locked-down Chromebook, so this is where he
+// actually runs and debugs code — and hands his errors straight to the teacher.
+// Pyodide is loaded lazily on first Run, so the app stays fast until it's used.
+// ---------------------------------------------------------------------------
+const PYODIDE_URL = "https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js";
+let pyodidePromise = null;
+let lastRun = { code: "", output: "" };
+
+const labToggle = $("#lab-toggle");
+const codeLab = $("#code-lab");
+const labEditor = $("#lab-editor");
+const labOutput = $("#lab-output");
+const labStatus = $("#lab-status");
+const labRun = $("#lab-run");
+
+function openLab(open) {
+  codeLab.hidden = !open;
+  labToggle.setAttribute("aria-expanded", String(open));
+  if (open) labEditor.focus();
+}
+labToggle.addEventListener("click", () => openLab(codeLab.hidden));
+$("#lab-close").addEventListener("click", () => openLab(false));
+$("#lab-clear").addEventListener("click", () => {
+  labEditor.value = "";
+  labOutput.textContent = "Press ▶ Run to see what your code does.";
+  labOutput.classList.remove("error");
+  labEditor.focus();
+});
+
+// Let Tab indent instead of leaving the editor.
+labEditor.addEventListener("keydown", (e) => {
+  if (e.key === "Tab") {
+    e.preventDefault();
+    const s = labEditor.selectionStart, en = labEditor.selectionEnd;
+    labEditor.value = labEditor.value.slice(0, s) + "    " + labEditor.value.slice(en);
+    labEditor.selectionStart = labEditor.selectionEnd = s + 4;
+  }
+});
+
+function loadPyodide() {
+  if (pyodidePromise) return pyodidePromise;
+  labStatus.textContent = "starting Python… (first run only)";
+  pyodidePromise = new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = PYODIDE_URL;
+    s.onload = async () => {
+      try {
+        const py = await window.loadPyodide();
+        resolve(py);
+      } catch (e) { reject(e); }
+    };
+    s.onerror = () => reject(new Error("Could not load the Python engine — check your connection."));
+    document.head.appendChild(s);
+  });
+  return pyodidePromise;
+}
+
+labRun.addEventListener("click", async () => {
+  const code = labEditor.value;
+  labRun.disabled = true;
+  labOutput.classList.remove("error");
+  labOutput.textContent = "Running…";
+  try {
+    const py = await loadPyodide();
+    labStatus.textContent = "runs in your browser — nothing to install";
+    // Capture stdout and stderr from the student's program.
+    py.setStdout({ batched: (t) => appendOut(t) });
+    py.setStderr({ batched: (t) => appendOut(t) });
+    labOutput.textContent = "";
+    let ok = true;
+    try {
+      await py.runPythonAsync(code);
+    } catch (err) {
+      ok = false;
+      labOutput.classList.add("error");
+      appendOut("\n" + String(err.message || err));
+    }
+    if (ok && labOutput.textContent.trim() === "") {
+      labOutput.textContent = "(your code ran, but didn't print anything — try adding a print(...))";
+    }
+    lastRun = { code, output: labOutput.textContent };
+  } catch (err) {
+    labOutput.classList.add("error");
+    labOutput.textContent = String(err.message || err);
+    labStatus.textContent = "couldn't start Python";
+  } finally {
+    labRun.disabled = false;
+  }
+});
+
+function appendOut(t) {
+  labOutput.textContent += t;
+  labOutput.scrollTop = labOutput.scrollHeight;
+}
+
+// The loop-closer: take what the student actually ran and what happened, and
+// ask the teacher about it — so debugging becomes a teaching moment.
+$("#lab-ask").addEventListener("click", () => {
+  const code = labEditor.value.trim();
+  if (!code) { labEditor.focus(); return; }
+  const output = (lastRun.code === labEditor.value ? lastRun.output : "").trim();
+  const msg =
+    "I ran this code:\n```\n" + code + "\n```\n" +
+    (output ? "and got this:\n```\n" + output + "\n```\n" : "(I haven't run it yet.)\n") +
+    "Can you help me understand it without just fixing it for me?";
+  openLab(false);
+  send(msg);
+});
+
 // Detect mode on load with a tiny ping so the pill is correct immediately.
 (async function detectMode() {
   try {

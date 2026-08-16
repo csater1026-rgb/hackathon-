@@ -41,7 +41,13 @@ A web app with three parts, each traceable straight back to Marcus:
    built-in six-step path takes an absolute beginner from "what even is code?"
    to writing their own first small program, with the teacher keeping them
    moving toward each step's goal.
-3. **Progress that just works.** No login, no account, no setup. Progress and
+3. **A Code Lab that runs real Python in the browser.** Marcus's locked-down
+   school Chromebook can't install Python — so we brought Python to him. Using
+   Pyodide (Python compiled to WebAssembly), he writes code, runs it, and sees
+   the real output or error, with nothing to install. When he's stuck, one
+   button sends his exact code *and* its error to the teacher, turning every
+   bug into a lesson instead of a dead end.
+4. **Progress that just works.** No login, no account, no setup. Progress and
    chats are saved in the browser (`localStorage`), so it loads instantly on a
    locked-down school Chromebook and works with zero friction.
 
@@ -71,6 +77,9 @@ see below.
 - **Model provider:** works with **Featherless AI** (the hackathon's presenting
   sponsor) by default, or any OpenAI-compatible provider (e.g. OpenAI) by
   changing two environment variables.
+- **Code Lab:** [Pyodide](https://pyodide.org) (CPython compiled to
+  WebAssembly), loaded lazily from a CDN on first run. Runs entirely in the
+  student's browser — no server, no install, no account.
 - **Storage:** browser `localStorage`. No database, no accounts.
 
 ## Run it yourself
@@ -94,6 +103,8 @@ We're being honest here, because the rubric rewards it.
 | Socratic teacher chat, full conversation, per-lesson memory | **Fully built.** Live when an API key is set. |
 | The teaching behavior (hint escalation, withholding answers, zero-jargon) | **Fully built** — it's the system prompt in `api/chat.js`. |
 | Six-step learning path, lesson goals, per-lesson chat history | **Fully built.** |
+| Code Lab — real in-browser Python (Pyodide/WASM), run + read errors | **Fully built.** Runs actual CPython in the browser; needs the CDN to load on first run. |
+| "Ask teacher about this" — sends real code + real output into the chat | **Fully built.** |
 | Progress tracking + "stuck" controls, saved locally | **Fully built.** |
 | Serverless proxy that keeps the API key private | **Fully built.** |
 | **Demo mode** (scripted replies when no key is set) | **Mocked on purpose** — a small scripted fallback so the public link is never blank. Clearly labelled "demo mode" in the UI. The real teacher is the live path. |
@@ -110,6 +121,9 @@ is real, and with a key connected every reply comes from a live model.
   generates every tutoring reply. Swappable to any provider/model via env vars.
 - **Claude Code (Anthropic)** — used as a coding assistant to help write and
   structure this project during the build window.
+- **Pyodide** — not an AI tool, but disclosed for completeness: it's the
+  open-source WebAssembly build of CPython that powers the Code Lab. No model
+  or training data is involved.
 
 **Datasets**
 
