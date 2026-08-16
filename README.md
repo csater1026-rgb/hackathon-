@@ -37,10 +37,17 @@ A web app with three parts, each traceable straight back to Marcus:
    finished solutions on purpose. It asks what you tried, teaches one small
    step at a time, and gives escalating *hints* — a nudge, then a bigger hint —
    only revealing a full walkthrough after you've genuinely struggled and asked.
-2. **A learning path.** No teacher also means no idea what to learn next. A
-   built-in six-step path takes an absolute beginner from "what even is code?"
-   to writing their own first small program, with the teacher keeping them
-   moving toward each step's goal.
+2. **The whole field, not just "learn to code."** Anyone can find a Python
+   tutorial. What's invisible to a student with no CS teacher is the *rest* of
+   computer science — the subjects with no on-ramp and no one to explain they
+   even exist. So there are five guided field tracks, each a short path of
+   lessons with a plain-language goal:
+   **Programming**, **Cybersecurity** (think like an attacker, passwords,
+   hashing, encryption), **Networking** (what happens when you open a website,
+   IP/DNS, packets, client/server), **How Computers Work** (binary, the CPU,
+   how code runs, the OS), and **Databases & Data** (tables, queries,
+   relationships). The teacher adapts to each field and won't force code where
+   a good analogy teaches better.
 3. **A Code Lab that runs real Python in the browser.** Marcus's locked-down
    school Chromebook can't install Python — so we brought Python to him. Using
    Pyodide (Python compiled to WebAssembly), he writes code, runs it, and sees
@@ -102,7 +109,7 @@ We're being honest here, because the rubric rewards it.
 | --- | --- |
 | Socratic teacher chat, full conversation, per-lesson memory | **Fully built.** Live when an API key is set. |
 | The teaching behavior (hint escalation, withholding answers, zero-jargon) | **Fully built** — it's the system prompt in `api/chat.js`. |
-| Six-step learning path, lesson goals, per-lesson chat history | **Fully built.** |
+| Five CS field tracks (26 lessons), field picker, lesson goals, per-lesson chat + progress | **Fully built.** |
 | Code Lab — real in-browser Python (Pyodide/WASM), run + read errors | **Fully built.** Runs actual CPython in the browser; needs the CDN to load on first run. |
 | "Ask teacher about this" — sends real code + real output into the chat | **Fully built.** |
 | Progress tracking + "stuck" controls, saved locally | **Fully built.** |

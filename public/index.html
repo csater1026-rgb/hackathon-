@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Class of One — the teacher you never had</title>
   <meta name="description" content="A patient, Socratic CS teacher for students whose school has no CS teacher and no one to ask when they get stuck." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%97%86%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -21,9 +21,14 @@
       </div>
     </div>
 
+    <div class="track-picker-wrap">
+      <h2 class="section-label">Pick a field</h2>
+      <div class="track-picker" id="track-picker" role="tablist" aria-label="Computer science fields"></div>
+    </div>
+
     <div class="path-header">
-      <h2>Your path</h2>
-      <p class="path-sub">Learn to code, one small step at a time.</p>
+      <h2 class="section-label" id="track-title">Your path</h2>
+      <p class="path-sub" id="track-blurb">One small step at a time.</p>
     </div>
     <ol class="path" id="path" aria-label="Lessons"></ol>
 
@@ -42,7 +47,7 @@
   <main class="chat" aria-label="Chat with your teacher">
     <header class="chat-header">
       <div class="lesson-now">
-        <span class="lesson-eyebrow">Right now</span>
+        <span class="lesson-eyebrow" id="lesson-eyebrow">Right now</span>
         <h1 id="lesson-title">Loading…</h1>
         <p id="lesson-goal" class="lesson-goal"></p>
       </div>
