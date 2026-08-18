@@ -135,9 +135,9 @@ no one to ask — which is exactly what the highest band of the rubric asks for.
 - **Back end:** a single Vercel serverless function (`api/chat.js`) that proxies
   to any OpenAI-compatible model API. The API key stays server-side and never
   reaches the browser.
-- **Model provider:** works with **Featherless AI** (the hackathon's presenting
-  sponsor) by default, or any OpenAI-compatible provider (e.g. OpenAI) by
-  changing two environment variables.
+- **Model provider:** **Google Gemini** via its OpenAI-compatible endpoint
+  (default). Works with any OpenAI-compatible provider — Featherless AI (the
+  hackathon's sponsor), OpenAI, etc. — by changing two environment variables.
 - **Code Lab:** [Pyodide](https://pyodide.org) (CPython compiled to
   WebAssembly), loaded lazily from a CDN on first run. Runs entirely in the
   student's browser — no server, no install, no account.
@@ -182,9 +182,9 @@ is real, and with a key connected every reply comes from a live model.
 
 **AI tools / models used**
 
-- **Model provider — Featherless AI** (OpenAI-compatible API), default model
-  `mistralai/Mistral-Nemo-Instruct-2407`, used as the live "teacher" that
-  generates every tutoring reply. Swappable to any provider/model via env vars.
+- **Model provider — Google Gemini** (`gemini-2.0-flash`), used via its
+  OpenAI-compatible API as the live "teacher" that generates every tutoring
+  reply. Swappable to any provider/model via env vars.
 - **Claude Code (Anthropic)** — used as a coding assistant to help write and
   structure this project during the build window.
 - **Pyodide** — not an AI tool, but disclosed for completeness: it's the

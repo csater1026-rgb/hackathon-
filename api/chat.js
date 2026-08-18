@@ -5,16 +5,17 @@
 // Vercel environment variable — so judges can open the demo with zero setup
 // and no login, exactly as the submission rules require.
 //
-// It works with ANY OpenAI-compatible provider. By default it targets
-// Featherless AI (the hackathon's presenting sponsor), but you can point it
-// at OpenAI or anything else by changing two environment variables.
+// It works with ANY OpenAI-compatible provider. By default it targets Google
+// Gemini via its OpenAI-compatible endpoint, but you can point it at
+// Featherless AI (the hackathon's sponsor), OpenAI, or anything else by
+// changing two environment variables.
 //
 // If no API key is configured, the endpoint falls back to a scripted "demo
 // mode" so the live link is never blank. Demo mode is clearly labelled in the
 // UI and in the README under "built vs mocked".
 
-const DEFAULT_BASE_URL = "https://api.featherless.ai/v1";
-const DEFAULT_MODEL = "mistralai/Mistral-Nemo-Instruct-2407";
+const DEFAULT_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai";
+const DEFAULT_MODEL = "gemini-2.0-flash";
 
 // The heart of the product. This is what turns a generic answer-machine into
 // a patient teacher for a student who has none. Every rule here traces back
