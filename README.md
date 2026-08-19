@@ -200,5 +200,6 @@ is real, and with a key connected every reply comes from a live model.
 
 ---
 
-_Built during the Suvidha AI Virtual Hackathon 2026 (Aug 15–21). One team, two
-people. Every commit is inside the build window._
+_Built during the Suvidha AI Virtual Hackathon 2026 (Aug 15–21) by team
+**Class of One** — Christian Saterfield. Every commit is inside the build
+window._
