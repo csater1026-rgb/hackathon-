@@ -1523,6 +1523,25 @@ window.addEventListener("resize", () => {
   if (!tourEl.hidden && tourTarget) positionTour(tourTarget, TOUR_STEPS[tourIdx].pos);
 });
 
+// ---------------------------------------------------------------------------
+// Mobile drawer: on small screens the sidebar is off-canvas by default (see
+// CSS) so it doesn't just vanish. This opens/closes it as a slide-in drawer.
+// ---------------------------------------------------------------------------
+const sidebarEl = $("#sidebar");
+const sidebarBackdrop = $("#sidebar-backdrop");
+const mobileMenuBtn = $("#mobile-menu-btn");
+function setSidebarOpen(open) {
+  sidebarEl.classList.toggle("open", open);
+  sidebarBackdrop.hidden = !open;
+  mobileMenuBtn.setAttribute("aria-expanded", String(open));
+}
+mobileMenuBtn.addEventListener("click", () => setSidebarOpen(true));
+$("#sidebar-close").addEventListener("click", () => setSidebarOpen(false));
+sidebarBackdrop.addEventListener("click", () => setSidebarOpen(false));
+// Close the drawer once a student picks a field or lesson on mobile.
+pathEl.addEventListener("click", () => setSidebarOpen(false));
+trackPickerEl.addEventListener("click", () => setSidebarOpen(false));
+
 // Boot
 renderTracks();
 renderPath();

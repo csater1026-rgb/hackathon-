@@ -11,14 +11,19 @@
 <body>
   <a class="skip-link" href="#chat-input">Skip to chat</a>
 
+  <!-- Mobile-only: opens the sidebar as a drawer (phones/small screens). -->
+  <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open fields & lessons menu" aria-expanded="false">☰ Fields & lessons</button>
+  <div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
+
   <!-- Sidebar: the learning path (solves "no teacher = no idea what's next") -->
-  <aside class="sidebar" aria-label="Your learning path">
+  <aside class="sidebar" id="sidebar" aria-label="Your learning path">
     <div class="brand">
       <span class="brand-mark" aria-hidden="true">◆</span>
       <div>
         <div class="brand-name">Class of One</div>
         <div class="brand-tag">the teacher you never had</div>
       </div>
+      <button class="sidebar-close" id="sidebar-close" aria-label="Close menu">✕</button>
     </div>
 
     <div class="track-picker-wrap">
