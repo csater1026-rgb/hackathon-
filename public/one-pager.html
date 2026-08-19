@@ -83,7 +83,7 @@
   .brand-tag { color: var(--ink-dim); font-size: 15px; }
 
   .hero h1 {
-    font-size: clamp(38px, 8vw, 68px); line-height: 1.02; margin: 26px 0 0;
+    font-size: clamp(36px, 7vw, 62px); line-height: 1.08; margin: 26px 0 0;
     font-weight: 600; letter-spacing: -.5px;
   }
   .hero h1 .u {
@@ -92,14 +92,42 @@
   }
   .lede {
     font-size: clamp(18px, 2.4vw, 22px); color: var(--ink-dim); margin: 22px 0 0;
-    max-width: 34ch;
+    max-width: 46ch;
   }
 
-  /* ---------- The contrast (thesis) ---------- */
-  .thesis { margin-top: 30px; }
-  .split {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px;
+  .devices { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .device {
+    font-size: 13px; padding: 8px 13px; border-radius: 99px;
+    background: var(--surface); border: 1px solid var(--line); color: var(--ink-dim);
   }
+
+  /* ---------- Generic section ---------- */
+  section { padding-top: 56px; }
+  section > h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: var(--ink-dim);
+    font-weight: 700; margin: 0 0 18px; display: flex; align-items: center; gap: 12px;
+  }
+  section > h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* who */
+  .who {
+    background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--amber);
+    border-radius: 12px; padding: 26px 28px; box-shadow: var(--shadow);
+  }
+  .who .name { font-size: 24px; font-weight: 600; margin: 0; }
+  .who p { margin: 12px 0 0; font-size: 18px; }
+  .who .pull { color: var(--ink); }
+
+  /* barrier */
+  .barrier {
+    font-size: clamp(24px, 4vw, 36px); line-height: 1.25; font-weight: 500; margin: 0;
+    letter-spacing: -.3px;
+  }
+  .barrier .q { color: var(--amber); }
+  .barrier + .sub { color: var(--ink-dim); font-size: 17px; margin-top: 16px; max-width: 60ch; }
+
+  /* the contrast, now supporting evidence rather than the hero */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 4px; }
   .card {
     background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
     padding: 20px; box-shadow: var(--shadow);
@@ -131,49 +159,22 @@
   .card.machine .verdict b { color: var(--wrong); font-weight: 600; }
   .card.teacher .verdict b { color: var(--right); font-weight: 600; }
 
-  .thesis-line {
-    margin-top: 26px; font-size: clamp(20px, 3vw, 27px); line-height: 1.4;
-    font-weight: 500;
+  .closing-line {
+    margin-top: 22px; font-size: clamp(19px, 2.6vw, 24px); line-height: 1.45;
+    font-weight: 500; max-width: 56ch;
   }
-  .thesis-line .hl { color: var(--amber); }
-
-  /* ---------- Generic section ---------- */
-  section { padding-top: 56px; }
-  section > h2 {
-    font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: var(--ink-dim);
-    font-weight: 700; margin: 0 0 18px; display: flex; align-items: center; gap: 12px;
-  }
-  section > h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-
-  /* who */
-  .who {
-    background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--amber);
-    border-radius: 12px; padding: 26px 28px; box-shadow: var(--shadow);
-  }
-  .who .name { font-size: 24px; font-weight: 600; margin: 0; }
-  .who p { margin: 12px 0 0; font-size: 18px; }
-  .who .pull { color: var(--ink); }
-
-  /* barrier */
-  .barrier {
-    font-size: clamp(24px, 4vw, 36px); line-height: 1.25; font-weight: 500; margin: 0;
-    letter-spacing: -.3px;
-  }
-  .barrier .q { color: var(--amber); }
-  .barrier + .sub { color: var(--ink-dim); font-size: 17px; margin-top: 16px; max-width: 60ch; }
 
   /* how it works */
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .feature {
     background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px;
   }
-  .feature h3 { margin: 0; font-size: 17px; display: flex; align-items: center; gap: 9px; }
-  .feature .ico { font-size: 18px; }
+  .feature h3 { margin: 0; font-size: 17px; }
   .feature p { margin: 8px 0 0; font-size: 14.5px; color: var(--ink-dim); line-height: 1.55; }
   .feature .why { color: var(--right); font-weight: 600; }
 
-  /* gateway arc */
-  .gateway-lede { font-size: clamp(19px, 2.6vw, 24px); line-height: 1.45; margin: 0 0 4px; max-width: 40ch; }
+  /* pathway arc */
+  .gateway-lede { font-size: clamp(19px, 2.6vw, 24px); line-height: 1.5; margin: 0 0 4px; max-width: 56ch; }
   .arc { display: flex; align-items: stretch; gap: 10px; margin-top: 22px; }
   .arc .step {
     flex: 1 1 0; background: var(--surface); border: 1px solid var(--line);
@@ -241,13 +242,35 @@
       <span class="brand-sep">·</span>
       <span class="brand-tag serif">the teacher you never had</span>
     </div>
-    <h1 class="serif">Everyone gave kids <span class="u">answers</span>.<br />We gave one kid a <span class="u">teacher</span>.</h1>
-    <p class="lede">An AI computer-science teacher for the student whose school has none — and the doorway into a whole field they were locked out of.</p>
+    <h1 class="serif">You never had a computer science teacher.<span class="u"> Now you do.</span></h1>
+    <p class="lede">A patient teacher who meets you on any computer, tablet, or phone you already own, opens a whole field you never knew was there, and keeps pointing you further into ideas so enjoyable you will want to keep learning them.</p>
+    <div class="devices">
+      <span class="device">A computer</span>
+      <span class="device">A phone</span>
+      <span class="device">A tablet</span>
+      <span class="device">Anywhere with a browser</span>
+    </div>
   </header>
 
-  <!-- THESIS: the contrast -->
-  <div class="thesis">
-    <div class="eyebrow">The idea</div>
+  <!-- WHO -->
+  <section>
+    <h2>Who we built it for</h2>
+    <div class="who">
+      <p class="name serif">Marcus, 15.</p>
+      <p>A curious student at a rural high school with <span class="pull">no computer science teacher</span> and no one to ask when he gets stuck. He has an old school Chromebook that will not let him install anything, patchy wifi, and real curiosity about code and AI. Every door into the subject assumes a teacher he simply does not have.</p>
+    </div>
+  </section>
+
+  <!-- BARRIER -->
+  <section>
+    <h2>The barrier we remove</h2>
+    <p class="barrier serif"><span class="q">"There's no one to ask</span> when I get stuck, and the whole field is invisible from where I'm standing."</p>
+    <p class="sub">The barrier is not a lack of access to AI. It is that access to <em>answers</em> is not the same as access to a <em>teacher</em>, and that fields beyond learning to code, like security, networking, and quantum, have no clear way in for someone learning alone.</p>
+  </section>
+
+  <!-- WHAT CHANGES -->
+  <section>
+    <h2>What changes when you have one</h2>
     <div class="split">
       <div class="card machine">
         <span class="tag">An answer machine</span>
@@ -258,31 +281,15 @@
     print(i)</pre>
           <div class="out">&gt; <span class="cursor"></span></div>
         </div>
-        <div class="verdict">You copy it. It works. <b>You learned nothing.</b></div>
+        <div class="verdict">You copy it. It works. <b>You did not really learn it.</b></div>
       </div>
       <div class="card teacher">
         <span class="tag">A teacher</span>
-        <div class="say serif">"Before I say anything — what did you expect to happen, and what actually happened? Even the exact error helps. Let's look together."</div>
+        <div class="say serif">"Before I say anything, what did you expect to happen, and what actually happened? Even the exact error helps. Let's look together."</div>
         <div class="verdict">You figure it out yourself. <b>It sticks.</b></div>
       </div>
     </div>
-    <p class="thesis-line serif">AI gave everyone access to <span class="hl">answers</span>. Almost no one has access to a <span class="hl">teacher</span>. For a kid with none, that gap is the whole problem — so we built the teacher, not another answer box.</p>
-  </div>
-
-  <!-- WHO -->
-  <section>
-    <h2>Who we built it for</h2>
-    <div class="who">
-      <p class="name serif">Marcus, 15.</p>
-      <p>A curious student at a rural high school with <span class="pull">no computer-science teacher</span> and no one to ask when he gets stuck. He has a locked-down school Chromebook, patchy wifi, and real curiosity about code and AI — and every door into the subject assumes a teacher he doesn't have.</p>
-    </div>
-  </section>
-
-  <!-- BARRIER -->
-  <section>
-    <h2>The barrier we remove</h2>
-    <p class="barrier serif"><span class="q">"There's no one to ask</span> when I get stuck — and the whole field is invisible from where I'm standing."</p>
-    <p class="sub">The barrier isn't a lack of access to AI. It's that access to <em>answers</em> is not access to a <em>teacher</em> — and that the fields beyond "learn to code" (security, networking, quantum) have no on-ramp for someone learning alone.</p>
+    <p class="closing-line serif">A teacher does not just answer. A teacher waits, asks good questions, and helps you find it yourself, so the next time you get stuck, you already know what to try.</p>
   </section>
 
   <!-- HOW -->
@@ -290,67 +297,67 @@
     <h2>How it works</h2>
     <div class="grid">
       <div class="feature">
-        <h3><span class="ico">🎓</span> A Socratic teacher</h3>
-        <p>It withholds finished answers on purpose — asks what you tried, gives escalating hints, and lets you steer with <em>“nudge / really stuck / I’ve got it.”</em> <span class="why">A teacher makes you think.</span></p>
+        <h3>A Socratic teacher</h3>
+        <p>It withholds finished answers on purpose, asks what you tried, and gives you a nudge instead of the whole solution. <span class="why">A teacher makes you think.</span></p>
       </div>
       <div class="feature">
-        <h3><span class="ico">🗺️</span> The whole field</h3>
-        <p>Nine guided tracks (46 lessons): programming, cybersecurity, networking, how computers work, databases, AI, algorithms, game dev, quantum. <span class="why">The rooms no one shows you exist.</span></p>
+        <h3>A whole new world</h3>
+        <p>Nine guided fields, forty six lessons: programming, cybersecurity, networking, how computers work, databases, AI, algorithms, game development, and quantum. <span class="why">Rooms no one ever showed you.</span></p>
       </div>
       <div class="feature">
-        <h3><span class="ico">🧠</span> It remembers you</h3>
-        <p>Tell it your name and interests once; it weaves your world into examples and links new ideas to lessons you’ve finished across every field. <span class="why">A teacher knows you.</span></p>
+        <h3>It remembers you</h3>
+        <p>Tell it your name and interests once, and it weaves your world into examples and connects new ideas to lessons you already finished. <span class="why">A teacher knows you.</span></p>
       </div>
       <div class="feature">
-        <h3><span class="ico">🎤</span> You can talk to it</h3>
-        <p>It reads replies aloud and you can answer with your voice — built into the browser, no cost. <span class="why">A teacher speaks — and it’s a reading/typing bridge.</span></p>
+        <h3>You can talk to it</h3>
+        <p>It reads replies aloud, and you can answer with your voice instead of typing, built right into the browser. <span class="why">A teacher speaks with you.</span></p>
       </div>
       <div class="feature">
-        <h3><span class="ico">⌨️</span> Run real code, on a Chromebook</h3>
-        <p>A Code Lab runs actual Python in the browser with nothing to install, and hands your errors straight to the teacher. <span class="why">A teacher lets you do it.</span></p>
+        <h3>Real code, anywhere</h3>
+        <p>A Code Lab runs actual Python right in the browser with nothing to install, and hands your errors straight to the teacher. <span class="why">A teacher lets you do it.</span></p>
       </div>
       <div class="feature">
-        <h3><span class="ico">✨</span> See it, then touch it</h3>
-        <p>Hand-drawn diagrams show the shape of an idea — how a website loads, a neural network, packets — and live widgets let you flip binary bits, run a cipher, or measure a qubit. <span class="why">Some ideas only click when you touch them.</span></p>
+        <h3>See it, then touch it</h3>
+        <p>Clear diagrams show the shape of an idea, and live widgets let you flip binary bits, run a cipher, or measure a qubit yourself. <span class="why">Some ideas only click when you touch them.</span></p>
       </div>
       <div class="feature">
-        <h3><span class="ico">📚</span> Then it sends you further</h3>
-        <p>Every field hands you a shortlist of the best <em>free</em> courses — freeCodeCamp, CS50, Elements of AI, IBM Quantum — flagging the ones that grant a real certificate. <span class="why">A teacher opens the next door.</span></p>
+        <h3>A path to keep going</h3>
+        <p>Finish a field and a roadmap appears: projects to build, topics to learn next, free courses with real certificates, and the careers this can lead to. <span class="why">A teacher shows you where the road goes.</span></p>
       </div>
       <div class="feature">
-        <h3><span class="ico">🌍</span> Works where the student is</h3>
-        <p>No login, no install, nothing to buy. Progress saves in the browser, so it loads on a locked-down school Chromebook. <span class="why">The door is actually open.</span></p>
+        <h3>Open to anyone</h3>
+        <p>No login, no install, nothing to buy. Progress saves right on your device, whatever that device happens to be. <span class="why">The door is actually open.</span></p>
       </div>
     </div>
   </section>
 
-  <!-- GATEWAY -->
+  <!-- PATHWAY -->
   <section>
-    <h2>Not a destination — a doorway</h2>
-    <p class="gateway-lede serif">The point was never to answer one question. It takes a kid who was locked out, walks them all the way to the edge of the map — and then points past it.</p>
+    <h2>A pathway, not a single lesson</h2>
+    <p class="gateway-lede serif">This was never about answering one question. It takes a student who felt locked out and walks them into a whole new world, then keeps pointing forward, toward ideas so satisfying to finally understand that you want to keep going.</p>
     <div class="arc">
       <div class="step">
         <div class="n">Where they start</div>
         <div class="t serif">Locked out</div>
-        <div class="d">No CS teacher, no one to ask, a whole field they can't even see.</div>
+        <div class="d">No computer science teacher, no one to ask, a whole field they cannot even see.</div>
       </div>
       <span class="arrow" aria-hidden="true">→</span>
       <div class="step hl">
         <div class="n">What we give them</div>
         <div class="t serif">A teacher</div>
-        <div class="d">Patient and Socratic. Remembers them. Talks with them.</div>
+        <div class="d">Patient and curious. Remembers them. Talks with them like a person, not a search bar.</div>
       </div>
       <span class="arrow" aria-hidden="true">→</span>
       <div class="step">
         <div class="n">What opens up</div>
-        <div class="t serif">Nine fields</div>
-        <div class="d">Code, security, networking, AI, quantum — the rooms they never knew existed.</div>
+        <div class="t serif">Nine worlds</div>
+        <div class="d">Code, security, networks, AI, quantum: rooms they never knew were there, each one more enjoyable than they expected.</div>
       </div>
       <span class="arrow" aria-hidden="true">→</span>
       <div class="step">
-        <div class="n">Where it sends them</div>
+        <div class="n">Where it leads</div>
         <div class="t serif">Anywhere</div>
-        <div class="d">Free university courses and real certificates, to go as far as they want.</div>
+        <div class="d">Projects, next topics, free courses, and real careers, so the journey keeps going long after this.</div>
       </div>
     </div>
   </section>
@@ -361,11 +368,11 @@
     <div class="stakes">
       <div class="stake">
         <div class="stake-big serif">Most schools never open the door.</div>
-        <p>A huge share of schools still offer <b>no real computer-science class</b> — and even fewer show students the <b>careers</b> behind it: security analyst, network engineer, data scientist, game developer. You can't choose a path you were never shown exists. For these students, the subject and every career in it simply stays invisible.</p>
+        <p>A huge share of schools still offer <b>no real computer science class</b>, and even fewer show students the <b>careers</b> behind it: security analyst, network engineer, data scientist, game developer. You cannot choose a path you were never shown exists. For these students, the subject and every career inside it simply stays invisible.</p>
       </div>
       <div class="stake">
-        <div class="stake-big serif">A $200 Chromebook is now enough.</div>
-        <p>Because it needs <b>no install, no account, and no admin rights</b>, the locked-down school Chromebook — the one device almost every student <em>does</em> have — can run <b>real Python</b> and explore security, networking, AI, and quantum. The cheapest, most restricted machine in the building just became a doorway into all of it.</p>
+        <div class="stake-big serif">Any screen you own is enough.</div>
+        <p>It needs <b>no install, no account, and no admin rights</b>, so it runs on a school Chromebook, a family computer, a borrowed tablet, or the phone already in your pocket. The device does not get to decide who is allowed to learn this anymore.</p>
       </div>
     </div>
   </section>
@@ -374,7 +381,7 @@
   <section>
     <h2>See it yourself</h2>
     <div class="cta">
-      <div class="big">Open it and start learning.<span>No login, no install — it loads on a school Chromebook.</span></div>
+      <div class="big">Open it and start learning.<span>No login, no install. It works on whatever device is already in your hands.</span></div>
       <div class="links">
         <a class="btn primary" href="https://hackathon-tau-beryl.vercel.app" target="_blank" rel="noopener">Live demo →</a>
         <a class="btn ghost" href="https://github.com/csater1026-rgb/hackathon-" target="_blank" rel="noopener">GitHub repo</a>
@@ -386,9 +393,9 @@
   <div class="foot">
     <div>
       <h4>Required disclosures</h4>
-      <p><b>AI tools:</b> Google Gemini (<span class="mono">gemini-2.0-flash</span>, via its OpenAI-compatible API) as the live teacher; Claude Code as a coding assistant during the build.</p>
-      <p><b>Datasets:</b> none — no training, scraped, or collected data. All lesson content and teaching instructions were written by us.</p>
-      <p><b>Other:</b> Pyodide (open-source Python-in-WebAssembly) powers the Code Lab.</p>
+      <p><b>AI tools:</b> Google Gemini (<span class="mono">gemini-2.0-flash</span>, called through an API that matches OpenAI's format) as the live teacher; Claude Code as a coding assistant during the build.</p>
+      <p><b>Datasets:</b> none. No training, scraped, or collected data. All lesson content and teaching instructions were written by us.</p>
+      <p><b>Other:</b> Pyodide (an open source build of Python that runs inside WebAssembly) powers the Code Lab.</p>
     </div>
     <div>
       <h4>Built for</h4>
@@ -399,6 +406,6 @@
     </div>
   </div>
 
-  <p class="sign serif">◆ Class of One — because no kid should be locked out of a field just because their school never opened the door.</p>
+  <p class="sign serif">◆ Class of One: a teacher, a pathway, and a whole new world, open to anyone with a screen and a little curiosity.</p>
 
 </div>
