@@ -110,6 +110,13 @@ export default async function handler(req, res) {
     });
   }
 
+  // A mode check (no messages yet, e.g. the pill on page load) shouldn't call
+  // the model at all — some providers reject an empty conversation, which
+  // used to leave the pill stuck on "checking...". Answer it directly.
+  if (messages.length === 0) {
+    return res.status(200).json({ mode: "live" });
+  }
+
   const baseUrl = process.env.AI_BASE_URL || DEFAULT_BASE_URL;
   const model = process.env.AI_MODEL || DEFAULT_MODEL;
 
@@ -146,6 +153,7 @@ export default async function handler(req, res) {
       return res.status(502).json({
         error: "The teacher couldn't be reached right now.",
         detail: detail.slice(0, 500),
+        mode: "live",
       });
     }
 
@@ -158,6 +166,7 @@ export default async function handler(req, res) {
     return res.status(502).json({
       error: "The teacher couldn't be reached right now.",
       detail: String(err).slice(0, 300),
+      mode: "live",
     });
   }
 }

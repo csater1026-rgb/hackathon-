@@ -803,7 +803,8 @@ function markDoneAndAdvance() {
 // Mode pill (live model vs demo mode) — honest about "built vs mocked"
 // ---------------------------------------------------------------------------
 function setMode(mode) {
-  if (!mode) return;
+  // Always resolve to a definite state — a missing/unexpected mode must never
+  // leave the pill stuck on "checking..." forever.
   modePill.classList.remove("live", "demo");
   if (mode === "live") {
     modePill.classList.add("live");
