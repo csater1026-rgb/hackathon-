@@ -182,7 +182,7 @@ is real, and with a key connected every reply comes from a live model.
 
 **AI tools / models used**
 
-- **Model provider — Google Gemini** (`gemini-2.0-flash`), used via its
+- **Model provider — Google Gemini** (`gemini-3.6-flash`), used via its
   OpenAI-compatible API as the live "teacher" that generates every tutoring
   reply. Swappable to any provider/model via env vars.
 - **Claude Code (Anthropic)** — used as a coding assistant to help write and

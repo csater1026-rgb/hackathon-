@@ -15,7 +15,7 @@
 // UI and in the README under "built vs mocked".
 
 const DEFAULT_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai";
-const DEFAULT_MODEL = "gemini-2.0-flash";
+const DEFAULT_MODEL = "gemini-3.6-flash";
 
 // The heart of the product. This is what turns a generic answer-machine into
 // a patient teacher for a student who has none. Every rule here traces back
