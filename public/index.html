@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <button class="further-btn" id="roadmap-btn">🗺️ Your roadmap — what's next</button>
+    <button class="further-btn" id="roadmap-btn"><svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l6-2 6 2 4-1v14l-4 1-6-2-6 2V6z"/><path d="M10 4v14M16 6v14"/></svg> Your roadmap — what's next</button>
   </aside>
 
   <!-- Main: the teacher -->
@@ -59,9 +59,9 @@
         <p id="lesson-goal" class="lesson-goal"></p>
       </div>
       <div class="header-right">
-        <button class="lab-toggle" id="voice-toggle" aria-pressed="false" title="Have your teacher read replies aloud" hidden>🔊 Read aloud</button>
-        <button class="lab-toggle" id="notes-toggle" title="What your teacher remembers about you">🧠 Teacher's notes</button>
-        <button class="lab-toggle" id="lab-toggle" aria-expanded="false" aria-controls="code-lab">⌨ Code Lab</button>
+        <button class="lab-toggle" id="voice-toggle" aria-pressed="false" title="Have your teacher read replies aloud" hidden><svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9v6h4l5 4V5l-5 4H5z"/><path d="M16 9a4 4 0 0 1 0 6M19 7a7 7 0 0 1 0 10"/></svg> Read aloud</button>
+        <button class="lab-toggle" id="notes-toggle" title="What your teacher remembers about you"><svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><circle cx="12" cy="15" r="1"/><path d="M9 10l3 5M15 10l-3 5M9 10h6"/></svg> Teacher's notes</button>
+        <button class="lab-toggle" id="lab-toggle" aria-expanded="false" aria-controls="code-lab"><svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M12 15h5"/></svg> Code Lab</button>
         <span class="mode-pill" id="mode-pill" title="Whether a live AI model is connected">checking…</span>
       </div>
     </header>
@@ -73,7 +73,7 @@
          install Python, so this is where he actually runs and debugs code. -->
     <section class="code-lab" id="code-lab" hidden aria-label="Code Lab">
       <div class="lab-head">
-        <span class="lab-title">⌨ Code Lab · Python</span>
+        <span class="lab-title"><svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M12 15h5"/></svg> Code Lab · Python</span>
         <span class="lab-status" id="lab-status">runs in your browser — nothing to install</span>
         <button class="lab-close" id="lab-close" aria-label="Close Code Lab">✕</button>
       </div>
@@ -107,7 +107,7 @@ print("hello, world")
 
     <form class="composer" id="composer">
       <label class="sr-only" for="chat-input">Message your teacher</label>
-      <button type="button" class="mic-btn" id="mic-btn" aria-label="Speak to your teacher instead of typing" title="Speak instead of typing" hidden>🎤</button>
+      <button type="button" class="mic-btn" id="mic-btn" aria-label="Speak to your teacher instead of typing" title="Speak instead of typing" hidden><svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/></svg></button>
       <textarea id="chat-input" rows="1" placeholder="Ask your teacher anything… (no such thing as a dumb question)"></textarea>
       <button type="submit" id="send-btn" aria-label="Send">Send</button>
     </form>
@@ -118,7 +118,7 @@ print("hello, world")
   <div class="modal-overlay" id="notes-modal" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="notes-heading">
       <div class="modal-head">
-        <h2 id="notes-heading">🧠 What your teacher remembers</h2>
+        <h2 id="notes-heading"><svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><circle cx="12" cy="15" r="1"/><path d="M9 10l3 5M15 10l-3 5M9 10h6"/></svg> What your teacher remembers</h2>
         <button class="lab-close" id="notes-close" aria-label="Close">✕</button>
       </div>
       <p class="modal-sub">A good teacher knows you. Tell yours a little, and it'll weave your world into the lessons and remember you across every field.</p>
@@ -146,7 +146,7 @@ print("hello, world")
   <div class="modal-overlay" id="roadmap-modal" hidden>
     <div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="roadmap-heading">
       <div class="modal-head">
-        <h2 id="roadmap-heading">🗺️ Your roadmap</h2>
+        <h2 id="roadmap-heading"><svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l6-2 6 2 4-1v14l-4 1-6-2-6 2V6z"/><path d="M10 4v14M16 6v14"/></svg> Your roadmap</h2>
         <button class="lab-close" id="roadmap-close" aria-label="Close">✕</button>
       </div>
       <p class="modal-sub" id="roadmap-sub">The whole path for this field — where you are, and exactly what to do next.</p>

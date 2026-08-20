@@ -3,6 +3,36 @@
 // Progress lives in localStorage, so there is no login and nothing to set up.
 
 // ---------------------------------------------------------------------------
+// Icons — simple white line-drawn SVGs, one per topic, instead of emoji.
+// stroke="currentColor" so every icon just inherits whatever text color
+// surrounds it, working cleanly in both light and dark themes.
+// ---------------------------------------------------------------------------
+function svgIcon(inner, viewBox = "0 0 24 24") {
+  return `<svg class="icn" viewBox="${viewBox}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
+}
+const ICON = {
+  code: svgIcon('<polyline points="8 6 3 12 8 18"/><polyline points="16 6 21 12 16 18"/>'),
+  lock: svgIcon('<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>'),
+  globe: svgIcon('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/>'),
+  cpu: svgIcon('<rect x="8" y="8" width="8" height="8" rx="1"/><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/>'),
+  database: svgIcon('<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>'),
+  brain: svgIcon('<circle cx="12" cy="12" r="8.5"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><circle cx="12" cy="15" r="1"/><path d="M9 10l3 5M15 10l-3 5M9 10h6"/>'),
+  branch: svgIcon('<circle cx="12" cy="4" r="2"/><circle cx="6" cy="20" r="2"/><circle cx="18" cy="20" r="2"/><path d="M12 6v4M12 10l-6 8M12 10l6 8"/>'),
+  gamepad: svgIcon('<rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>'),
+  atom: svgIcon('<circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(120 12 12)"/>'),
+  terminal: svgIcon('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M12 15h5"/>'),
+  speaker: svgIcon('<path d="M5 9v6h4l5 4V5l-5 4H5z"/><path d="M16 9a4 4 0 0 1 0 6M19 7a7 7 0 0 1 0 10"/>'),
+  mic: svgIcon('<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/>'),
+  map: svgIcon('<path d="M4 6l6-2 6 2 4-1v14l-4 1-6-2-6 2V6z"/><path d="M10 4v14M16 6v14"/>'),
+  sparkle: svgIcon('<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.5 6.5l2 2M15.5 15.5l2 2M6.5 17.5l2-2M15.5 8.5l2-2"/>'),
+  picture: svgIcon('<rect x="3" y="4" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M3 16l5-5 4 4 3-3 6 6"/>'),
+  hammer: svgIcon('<path d="M14 6l4 4-8.5 8.5-4-4L14 6z"/><path d="M3 21l4-4"/>'),
+  trend: svgIcon('<path d="M3 17l6-6 4 4 8-8"/><path d="M15 6h6v6"/>'),
+  cap: svgIcon('<path d="M12 3l10 5-10 5L2 8l10-5z"/><path d="M6 11v5c0 1.7 3 3 6 3s6-1.3 6-3v-5"/>'),
+  compass: svgIcon('<circle cx="12" cy="12" r="9"/><path d="M15 9l-2 6-6 2 2-6 6-2z"/>'),
+};
+
+// ---------------------------------------------------------------------------
 // The curriculum. A student with no teacher doesn't just lack answers — they
 // lack a MAP of the whole field. Anyone can find "learn to code" tutorials.
 // What's invisible to a kid with no CS teacher is the REST of computer
@@ -13,7 +43,7 @@
 const TRACKS = [
   {
     id: "prog",
-    icon: "⌨",
+    icon: ICON.code,
     title: "Programming",
     blurb: "Make a computer do what you say, one instruction at a time.",
     field: "programming and writing code",
@@ -76,7 +106,7 @@ const TRACKS = [
   },
   {
     id: "sec",
-    icon: "🔐",
+    icon: ICON.lock,
     title: "Cybersecurity",
     blurb: "How systems get broken into — and how they're defended.",
     field: "cybersecurity and how systems are attacked and defended",
@@ -132,7 +162,7 @@ const TRACKS = [
   },
   {
     id: "net",
-    icon: "🌐",
+    icon: ICON.globe,
     title: "Networking",
     blurb: "What actually happens when you open a website.",
     field: "computer networking and how the internet moves information",
@@ -189,7 +219,7 @@ const TRACKS = [
   },
   {
     id: "sys",
-    icon: "⚙",
+    icon: ICON.cpu,
     title: "How Computers Work",
     blurb: "Under the hood: from 1s and 0s to a running program.",
     field: "how computers work under the hood, from hardware to running code",
@@ -245,7 +275,7 @@ const TRACKS = [
   },
   {
     id: "data",
-    icon: "🗃",
+    icon: ICON.database,
     title: "Databases & Data",
     blurb: "How apps remember everything — and answer questions fast.",
     field: "databases and how structured data is stored and queried",
@@ -301,7 +331,7 @@ const TRACKS = [
   },
   {
     id: "ai",
-    icon: "🤖",
+    icon: ICON.brain,
     title: "Artificial Intelligence",
     blurb: "How machines actually learn — and where they go wrong.",
     field: "artificial intelligence and machine learning, at a conceptual level",
@@ -357,7 +387,7 @@ const TRACKS = [
   },
   {
     id: "algo",
-    icon: "🧩",
+    icon: ICON.branch,
     title: "Algorithms",
     blurb: "How to solve problems in clever, fast ways.",
     field: "algorithms and computational problem-solving",
@@ -412,7 +442,7 @@ const TRACKS = [
   },
   {
     id: "game",
-    icon: "🎮",
+    icon: ICON.gamepad,
     title: "Game Dev & Graphics",
     blurb: "How computers draw moving worlds on a screen.",
     field: "game development and computer graphics",
@@ -467,7 +497,7 @@ const TRACKS = [
   },
   {
     id: "quantum",
-    icon: "⚛",
+    icon: ICON.atom,
     title: "Quantum Computing",
     blurb: "Computing with the strange rules of the very small.",
     field: "quantum computing, at a beginner-friendly conceptual level",
@@ -667,7 +697,7 @@ function renderPath() {
 function renderLessonHeader() {
   const l = currentLesson();
   const t = currentTrack();
-  lessonEyebrow.textContent = `${t.icon} ${t.title}`;
+  lessonEyebrow.innerHTML = `${t.icon} ${t.title}`;
   lessonTitle.textContent = l.title;
   lessonGoal.textContent = l.goal;
 }
@@ -761,7 +791,9 @@ async function send(text) {
       }),
     });
     const data = await res.json();
-    const reply = data.reply || data.error || "Hmm, I didn't catch that — try again?";
+    const reply =
+      data.reply ||
+      (data.error ? `${data.error}${data.detail ? `\n\n(debug: ${data.detail})` : ""}` : "Hmm, I didn't catch that — try again?");
     typing.remove();
     history.push({ role: "assistant", content: reply });
     addMessage("assistant", reply);
@@ -795,7 +827,7 @@ function markDoneAndAdvance() {
   if (next) {
     addMessage("assistant", `Nice work — that's "${l.title}" done. ✓ Whenever you're ready, click "${next.title}" on the left and we'll keep going.`);
   } else {
-    addMessage("assistant", `That's the whole ${track.title} track finished — every lesson done. ✓ You just taught yourself a field of computer science with no teacher in your school. That's the entire point. Now open "🗺️ Your roadmap" on the left — it shows exactly what to build next, what to learn after this, free courses (some with real certificates), and where this path can take you. 🎉`);
+    addMessage("assistant", `That's the whole ${track.title} track finished — every lesson done. ✓ You just taught yourself a field of computer science with no teacher in your school. That's the entire point. Now open "Your roadmap" on the left — it shows exactly what to build next, what to learn after this, free courses (some with real certificates), and where this path can take you.`);
   }
 }
 
@@ -893,7 +925,7 @@ $("#notes-save").addEventListener("click", () => {
   saveState();
   openNotes(false);
   if (state.profile.name) {
-    addMessage("assistant", `Got it — I'll remember that, ${state.profile.name}. 🧠`);
+    addMessage("assistant", `Got it — I'll remember that, ${state.profile.name}.`);
   }
 });
 // Two-step forget: ask "are you sure?" before wiping the memory.
@@ -932,33 +964,33 @@ function openRoadmap(open) {
     const doneCount = t.lessons.filter((l) => state.done[l.id]).length;
     const allDone = doneCount === t.lessons.length;
 
-    $("#roadmap-heading").textContent = `🗺️ ${t.title} roadmap`;
+    $("#roadmap-heading").innerHTML = `${ICON.map} ${t.title} roadmap`;
     $("#roadmap-sub").textContent = "Where you are, and exactly what to do next. There's always a next step.";
 
     const foundations = `<div class="rm-lessons">` + t.lessons.map((l) =>
       `<div class="rm-lesson ${state.done[l.id] ? "done" : ""}"><span class="mk">${state.done[l.id] ? "✓" : "○"}</span>${l.title}</div>`
     ).join("") + `</div>`;
 
-    const buildChips = `<div class="chips">` + rm.build.map((b) => `<span class="chip build">🔨 ${b}</span>`).join("") + `</div>`;
+    const buildChips = `<div class="chips">` + rm.build.map((b) => `<span class="chip build">${ICON.hammer} ${b}</span>`).join("") + `</div>`;
     const deeperChips = `<div class="chips">` + rm.deeper.map((d) => `<span class="chip">${d}</span>`).join("") + `</div>`;
-    const careerChips = `<div class="chips">` + rm.careers.map((c) => `<span class="chip career">🧭 ${c}</span>`).join("") + `</div>`;
+    const careerChips = `<div class="chips">` + rm.careers.map((c) => `<span class="chip career">${ICON.compass} ${c}</span>`).join("") + `</div>`;
     const resList = `<div class="resource-list">` + (t.resources || []).map((r) =>
       `<a class="resource" href="${r.url}" target="_blank" rel="noopener noreferrer">
         <span class="r-main"><span class="r-name">${r.name}</span><span class="r-note">${r.note}</span></span>
-        ${r.cert ? `<span class="r-cert">🎓 free cert</span>` : ""}
+        ${r.cert ? `<span class="r-cert">${ICON.cap} free cert</span>` : ""}
         <span class="r-arrow" aria-hidden="true">↗</span></a>`
     ).join("") + `</div>`;
 
     $("#roadmap-body").innerHTML =
       stageHTML({ state: allDone ? "done" : "active", icon: allDone ? "✓" : "1",
         title: "Learn the foundations", sub: `${doneCount} of ${t.lessons.length} lessons done — right here in Class of One`, inner: foundations }) +
-      stageHTML({ icon: "🔨", title: "Build something with it",
+      stageHTML({ icon: ICON.hammer, title: "Build something with it",
         sub: "The best way to make it stick — small projects you can actually finish", inner: buildChips }) +
-      stageHTML({ icon: "📈", title: "Learn these next",
+      stageHTML({ icon: ICON.trend, title: "Learn these next",
         sub: "The natural next topics once the basics click", inner: deeperChips }) +
-      stageHTML({ icon: "🎓", title: "Free courses & certificates",
-        sub: "Go deeper for free — a 🎓 means you can earn a real certificate", inner: resList }) +
-      stageHTML({ icon: "🧭", title: "Where it can take you",
+      stageHTML({ icon: ICON.cap, title: "Free courses & certificates",
+        sub: "Go deeper for free. A certificate icon means you can earn a real certificate.", inner: resList }) +
+      stageHTML({ icon: ICON.compass, title: "Where it can take you",
         sub: "Real careers this path opens up", inner: careerChips });
   }
   roadmapModal.hidden = !open;
@@ -977,7 +1009,7 @@ function renderWidget(lesson) {
   card.className = "widget-card";
   const meta = WIDGET_META[lesson.widget];
   card.innerHTML = `
-    <div class="widget-head"><span class="widget-spark">✨</span><span class="widget-title">${meta.title}</span></div>
+    <div class="widget-head"><span class="widget-spark">${ICON.sparkle}</span><span class="widget-title">${meta.title}</span></div>
     <p class="widget-hint">${meta.hint}</p>
     <div class="widget-body"></div>`;
   const body = card.querySelector(".widget-body");
@@ -998,7 +1030,7 @@ function renderDiagram(lesson) {
   const card = document.createElement("div");
   card.className = "diagram-card";
   card.innerHTML = `
-    <div class="diagram-head"><span class="widget-spark">🖼️</span><span class="diagram-title">${d.title}</span></div>
+    <div class="diagram-head"><span class="widget-spark">${ICON.picture}</span><span class="diagram-title">${d.title}</span></div>
     ${d.svg}
     <p class="diagram-caption">${d.caption}</p>`;
   messagesEl.insertBefore(card, messagesEl.firstChild);
@@ -1063,13 +1095,13 @@ const DIAGRAMS = {
     caption: "You ask for a name, it gets turned into an address, the server sends the page back — split into packets that reassemble on your screen.",
     svg: `<svg viewBox="0 0 620 150" role="img" aria-label="A browser asks DNS for an address, then requests a page from a server, which replies.">
       <rect class="dg-box" x="8" y="45" width="120" height="60" rx="10"/>
-      <text class="dg-label" x="68" y="72" text-anchor="middle">You 💻</text>
+      <text class="dg-label" x="68" y="72" text-anchor="middle">You</text>
       <text class="dg-sub" x="68" y="90" text-anchor="middle">type a web name</text>
       <rect class="dg-box" x="250" y="8" width="120" height="50" rx="10"/>
-      <text class="dg-label" x="310" y="30" text-anchor="middle">DNS 📖</text>
+      <text class="dg-label" x="310" y="30" text-anchor="middle">DNS</text>
       <text class="dg-sub" x="310" y="46" text-anchor="middle">name → address</text>
       <rect class="dg-box" x="492" y="45" width="120" height="60" rx="10"/>
-      <text class="dg-label" x="552" y="72" text-anchor="middle">Server 🗄️</text>
+      <text class="dg-label" x="552" y="72" text-anchor="middle">Server</text>
       <text class="dg-sub" x="552" y="90" text-anchor="middle">has the page</text>
       <path class="dg-line-accent" stroke-width="2" d="M128 60 Q190 30 250 33" marker-end="url(#ar)"/>
       <path class="dg-line-accent" stroke-width="2" d="M370 40 Q430 60 492 68" marker-end="url(#ar)"/>
@@ -1250,10 +1282,11 @@ const synth = window.speechSynthesis;
 let readAloud = false;
 if (synth) {
   voiceToggle.hidden = false;
+  voiceToggle.innerHTML = `${ICON.speaker} Read aloud`;
   voiceToggle.addEventListener("click", () => {
     readAloud = !readAloud;
     voiceToggle.setAttribute("aria-pressed", String(readAloud));
-    voiceToggle.textContent = readAloud ? "🔊 Reading aloud" : "🔊 Read aloud";
+    voiceToggle.innerHTML = readAloud ? `${ICON.speaker} Reading aloud` : `${ICON.speaker} Read aloud`;
     if (!readAloud) synth.cancel();
   });
 }

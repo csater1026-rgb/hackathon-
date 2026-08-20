@@ -34,6 +34,15 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* White line-drawn topic icons, replacing emoji everywhere. Sized in em so
+   each one scales with whatever text it sits beside, and currentColor so it
+   always matches the surrounding text color in both themes. */
+.icn { width: 1em; height: 1em; flex: none; vertical-align: -0.2em; }
+.lesson-eyebrow .icn { width: 14px; height: 14px; vertical-align: -2.5px; }
+.rm-dot .icn { width: 16px; height: 16px; }
+.resource .r-cert .icn { width: 12px; height: 12px; }
+.mic-btn { display: grid; place-items: center; }
+
 body {
   display: grid;
   grid-template-columns: 300px 1fr;
