@@ -262,7 +262,7 @@ body {
 }
 .diagram-head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
 .diagram-title { font-weight: 700; font-size: 14px; }
-.diagram-card svg { width: 100%; height: auto; display: block; }
+.diagram-card > svg { width: 100%; height: auto; display: block; }
 .diagram-card .dg-box { fill: var(--panel-2); stroke: var(--line); }
 .diagram-card .dg-accent { fill: var(--accent); }
 .diagram-card .dg-good { fill: var(--good); }
