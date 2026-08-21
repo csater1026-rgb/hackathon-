@@ -708,6 +708,9 @@ function bubbleHTML(text) {
   let out = esc(text);
   out = out.replace(/```([\s\S]*?)```/g, (_, code) => `<pre><code>${code.trim()}</code></pre>`);
   out = out.replace(/`([^`]+)`/g, (_, code) => `<code>${code}</code>`);
+  out = out.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  out = out.replace(/(?<![*\w])\*([^*]+)\*(?![*\w])/g, "<em>$1</em>");
+  out = out.replace(/(?<![_\w])_([^_]+)_(?![_\w])/g, "<em>$1</em>");
   return out;
 }
 
@@ -885,6 +888,17 @@ document.querySelectorAll(".stuck-btn").forEach((btn) => {
   });
 });
 
+// A middle ground between "go back" (nothing lost) and the big reset button
+// (everything lost): clear just the chat for the lesson you're on right now.
+$("#restart-lesson-btn").addEventListener("click", () => {
+  const l = currentLesson();
+  if (confirm(`Restart "${l.title}"? This clears just this lesson's chat — your other lessons and progress stay as they are.`)) {
+    state.chats[l.id] = [];
+    saveState();
+    renderChat();
+  }
+});
+
 $("#reset-btn").addEventListener("click", () => {
   if (confirm("Start everything over? This clears your progress and chats on this device.")) {
     state = defaultState();
@@ -965,7 +979,7 @@ function openRoadmap(open) {
     const allDone = doneCount === t.lessons.length;
 
     $("#roadmap-heading").innerHTML = `${ICON.map} ${t.title} roadmap`;
-    $("#roadmap-sub").textContent = "Where you are, and exactly what to do next. There's always a next step.";
+    $("#roadmap-sub").textContent = "Stage 1 is built into Class of One. Everything after that is up to you — this just shows you where to go.";
 
     const foundations = `<div class="rm-lessons">` + t.lessons.map((l) =>
       `<div class="rm-lesson ${state.done[l.id] ? "done" : ""}"><span class="mk">${state.done[l.id] ? "✓" : "○"}</span>${l.title}</div>`
@@ -983,15 +997,15 @@ function openRoadmap(open) {
 
     $("#roadmap-body").innerHTML =
       stageHTML({ state: allDone ? "done" : "active", icon: allDone ? "✓" : "1",
-        title: "Learn the foundations", sub: `${doneCount} of ${t.lessons.length} lessons done — right here in Class of One`, inner: foundations }) +
-      stageHTML({ icon: ICON.hammer, title: "Build something with it",
-        sub: "The best way to make it stick — small projects you can actually finish", inner: buildChips }) +
-      stageHTML({ icon: ICON.trend, title: "Learn these next",
-        sub: "The natural next topics once the basics click", inner: deeperChips }) +
-      stageHTML({ icon: ICON.cap, title: "Free courses & certificates",
-        sub: "Go deeper for free. A certificate icon means you can earn a real certificate.", inner: resList }) +
-      stageHTML({ icon: ICON.compass, title: "Where it can take you",
-        sub: "Real careers this path opens up", inner: careerChips });
+        title: "Learn the foundations", sub: `Included in Class of One — ${doneCount} of ${t.lessons.length} lessons done`, inner: foundations }) +
+      stageHTML({ icon: ICON.hammer, title: "Then, build something with it",
+        sub: "On your own, once you finish above — small projects that make it stick", inner: buildChips }) +
+      stageHTML({ icon: ICON.trend, title: "Topics to learn after this",
+        sub: "Not covered in Class of One yet — the natural next things to study once the basics click", inner: deeperChips }) +
+      stageHTML({ icon: ICON.cap, title: "Optional: free courses elsewhere", state: "optional",
+        sub: "Not required, not made by us — other people's free courses if you want more structure. A certificate icon means you can earn a real one.", inner: resList }) +
+      stageHTML({ icon: ICON.compass, title: "Where this can eventually lead",
+        sub: "Real careers this path opens up, someday, not a next step", inner: careerChips });
   }
   roadmapModal.hidden = !open;
 }
@@ -1290,14 +1304,40 @@ if (synth) {
     if (!readAloud) synth.cancel();
   });
 }
+// Chrome's voice list loads asynchronously — calling speak() before it's
+// ready can silently drop the first attempt (the "worked after a few
+// seconds" bug). Warm it up immediately instead of waiting for a click.
+let voices = [];
+function loadVoices() { voices = synth ? synth.getVoices() : []; }
+if (synth) {
+  loadVoices();
+  synth.addEventListener("voiceschanged", loadVoices);
+}
+function pickVoice() {
+  if (!voices.length) return null;
+  const preferences = [
+    (v) => /Google US English/i.test(v.name),
+    (v) => /Natural|Enhanced|Premium/i.test(v.name) && /^en/i.test(v.lang),
+    (v) => /^en-US/i.test(v.lang) && !v.localService,
+    (v) => /^en-US/i.test(v.lang),
+    (v) => /^en/i.test(v.lang),
+  ];
+  for (const test of preferences) {
+    const found = voices.find(test);
+    if (found) return found;
+  }
+  return voices[0];
+}
 function speak(text) {
   if (!synth || !readAloud || !text) return;
   // Strip code blocks / markdown so it reads naturally.
   const clean = text.replace(/```[\s\S]*?```/g, " (see the code) ").replace(/[`*_#>]/g, "");
   synth.cancel();
   const u = new SpeechSynthesisUtterance(clean);
-  u.rate = 1.0;
-  u.pitch = 1.05;
+  u.rate = 1.02;
+  u.pitch = 1.0;
+  const voice = pickVoice();
+  if (voice) u.voice = voice;
   synth.speak(u);
 }
 
@@ -1403,7 +1443,7 @@ labRun.addEventListener("click", async () => {
   labOutput.textContent = "Running…";
   try {
     const py = await loadPyodide();
-    labStatus.textContent = "runs in your browser — nothing to install";
+    labStatus.textContent = "a shared scratchpad — same code no matter which lesson you're on";
     // Capture stdout and stderr from the student's program.
     py.setStdout({ batched: (t) => appendOut(t) });
     py.setStderr({ batched: (t) => appendOut(t) });
@@ -1477,6 +1517,9 @@ $("#welcome-tour").addEventListener("click", () => {
   dismissWelcome();
   startTour();
 });
+// A persistent way back in — for "wait, what does Teacher's notes do again?"
+// or anyone who wants to replay the intro and tour later.
+$("#help-btn").addEventListener("click", () => { welcomeModal.hidden = false; });
 
 const TOUR_STEPS = [
   { sel: "#track-picker", pos: "right", text: "Start here: pick a field. There are nine — from coding and cybersecurity to AI and quantum. Each one is a short guided path." },
